@@ -1,0 +1,50 @@
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { PROJECTS } from "@/data/projects";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+
+export function ProjectsPreview() {
+  return (
+    <section className="mb-20">
+      <ScrollReveal>
+        <SectionTitle
+          number="02"
+          title="projects"
+          action={
+            <Link
+              href="/projects"
+              className="text-sm font-mono flex items-center gap-1 hover:text-muted transition-colors"
+            >
+              ALL PROJECTS <ArrowRight size={14} />
+            </Link>
+          }
+        />
+      </ScrollReveal>
+
+      <div className="flex flex-col">
+        {PROJECTS.slice(0, 3).map((project, i) => (
+          <ScrollReveal key={project.id} delay={i * 0.06}>
+            <a
+              href={project.link}
+              className="group flex items-center justify-between gap-4 py-4 border-b border-border hover:bg-card/50 -mx-4 px-4 rounded-lg transition-colors"
+            >
+              <div className="min-w-0">
+                <h3 className="font-semibold text-[15px] group-hover:text-muted transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-[13px] text-muted mt-0.5 line-clamp-1">
+                  {project.description}
+                </p>
+              </div>
+              <ArrowUpRight
+                size={15}
+                className="text-muted opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+              />
+            </a>
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
+  );
+}
