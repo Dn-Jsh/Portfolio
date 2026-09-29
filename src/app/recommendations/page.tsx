@@ -26,8 +26,8 @@ export default function RecommendationsPage() {
                 <div className="w-8 h-8 rounded-full bg-bg border border-border flex items-center justify-center text-[11px] font-bold text-muted shrink-0">
                   {rec.name.split(" ").map(n => n[0]).join("").toUpperCase()}
                 </div>
-                <div>
-                  <h4 className="font-semibold text-[13px]">{rec.name}</h4>
+                <div className="min-w-0 flex-1">
+                  <h4 className="font-semibold text-[13px] break-words">{rec.name}</h4>
                   <p className="text-[11px] text-muted">{rec.role}</p>
                 </div>
               </div>

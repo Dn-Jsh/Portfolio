@@ -35,7 +35,7 @@ export default function GearPage() {
                     <div className="w-full aspect-[4/3] rounded-lg bg-bg border border-border/50 flex items-center justify-center text-muted text-[11px] font-mono mb-4">
                       photo
                     </div>
-                    <h3 className="font-semibold text-[14px] mb-0.5">{item.name}</h3>
+                    <h3 className="font-semibold text-[14px] mb-0.5 break-words">{item.name}</h3>
                     <p className="text-[12px] text-muted leading-relaxed">{item.description}</p>
                   </div>
                 ))}

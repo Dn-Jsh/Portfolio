@@ -26,11 +26,11 @@ export default function SocialsPage() {
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                   <h3 className="font-semibold text-[15px] group-hover:text-muted transition-colors">
                     {social.platform}
                   </h3>
-                  <span className="text-[12px] font-mono text-muted">
+                  <span className="text-[12px] font-mono text-muted break-all">
                     {social.handle}
                   </span>
                 </div>

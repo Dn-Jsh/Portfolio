@@ -32,16 +32,18 @@ export function ExperiencePreview() {
       <div className="flex flex-col">
         {EXPERIENCE.map((exp, i) => (
           <ScrollReveal key={i} delay={i * 0.06}>
-            <div className="flex items-baseline gap-4 py-3.5 border-b border-border">
-              <span className="text-[13px] font-mono text-muted w-16 shrink-0">
+            <div className="flex sm:items-baseline gap-4 py-3.5 border-b border-border">
+              <span className="text-[13px] font-mono text-muted w-16 shrink-0 pt-0.5 sm:pt-0">
                 {exp.period.split("—")[0].trim().split(" ").pop()}
               </span>
-              <span className="font-semibold text-[14px] flex-1 min-w-0">
-                {exp.role}
-              </span>
-              <span className="text-[13px] text-muted text-right shrink-0 hidden sm:block">
-                {exp.company}
-              </span>
+              <div className="flex flex-col sm:flex-row sm:items-baseline flex-1 min-w-0 justify-between gap-1 sm:gap-4">
+                <span className="font-semibold text-[14px] min-w-0 break-words">
+                  {exp.role}
+                </span>
+                <span className="text-[13px] text-muted shrink-0 sm:shrink">
+                  {exp.company}
+                </span>
+              </div>
             </div>
           </ScrollReveal>
         ))}

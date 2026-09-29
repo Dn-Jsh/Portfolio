@@ -17,10 +17,10 @@ export default async function BlogPage() {
           <ScrollReveal key={post.slug} delay={i * 0.08}>
             <Link
               href={`/blog/${post.slug}`}
-              className="group flex gap-6 py-6 border-b border-border hover:bg-card/50 -mx-4 px-4 rounded-lg transition-colors"
+              className="group flex flex-col sm:flex-row gap-4 sm:gap-6 py-6 border-b border-border hover:bg-card/50 -mx-4 px-4 rounded-lg transition-colors"
             >
               {/* Thumbnail placeholder */}
-              <div className="w-28 h-20 rounded-lg bg-card border border-border/50 flex items-center justify-center text-muted text-[10px] font-mono shrink-0">
+              <div className="w-full sm:w-28 h-40 sm:h-20 rounded-lg bg-card border border-border/50 flex items-center justify-center text-muted text-[10px] font-mono shrink-0">
                 cover
               </div>
 
@@ -32,7 +32,7 @@ export default async function BlogPage() {
                     month: "short",
                   })}
                 </span>
-                <h3 className="text-lg font-semibold mt-1 mb-1.5 group-hover:text-muted transition-colors">
+                <h3 className="text-lg font-semibold mt-1 mb-1.5 group-hover:text-muted transition-colors break-words">
                   {post.title}
                 </h3>
                 <p className="text-[14px] text-fg/60 leading-relaxed line-clamp-2">

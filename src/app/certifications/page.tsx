@@ -37,7 +37,7 @@ export default function CertificationsPage() {
                     <div className="w-10 h-10 rounded-full bg-bg border border-border flex items-center justify-center text-[11px] font-bold text-muted mb-4">
                       {cert.provider.slice(0, 2).toUpperCase()}
                     </div>
-                    <h3 className="font-semibold text-[14px] leading-snug mb-1">
+                    <h3 className="font-semibold text-[14px] leading-snug mb-1 break-words">
                       {cert.title}
                     </h3>
                     <p className="text-[12px] text-muted mb-4">{cert.provider}</p>

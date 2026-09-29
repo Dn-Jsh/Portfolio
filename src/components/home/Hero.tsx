@@ -8,7 +8,7 @@ export function Hero() {
       {/* ── Profile: Photo + Name + Bio ── */}
       <ScrollReveal>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-          <div className="w-44 h-56 md:w-52 md:h-64 rounded-xl overflow-hidden shrink-0 border border-border bg-bg relative">
+          <div className="w-32 h-40 sm:w-44 sm:h-56 md:w-52 md:h-64 rounded-xl overflow-hidden shrink-0 border border-border bg-bg relative">
             <img
               src="/profile-nobg.png"
               alt="Dan Jeshua"
@@ -51,7 +51,7 @@ export function Hero() {
 
       {/* ── Stats row ── */}
       <ScrollReveal delay={0.12}>
-        <div className="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-border">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-4 mt-12 pt-8 border-t border-border">
           <div>
             <div className="text-2xl md:text-3xl font-bold tracking-tight">
               10+

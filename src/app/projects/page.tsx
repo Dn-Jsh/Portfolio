@@ -34,7 +34,7 @@ export default function ProjectsPage() {
                 />
               </div>
 
-              <h3 className="text-xl font-semibold mb-2 group-hover:text-muted transition-colors">
+              <h3 className="text-xl font-semibold mb-2 group-hover:text-muted transition-colors break-words">
                 {project.title}
               </h3>
               <p className="text-fg/70 text-[15px] leading-relaxed mb-4 max-w-2xl">

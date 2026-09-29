@@ -18,14 +18,14 @@ export default function ExperiencePage() {
                 <div className="w-8 h-8 rounded-lg bg-card border border-border flex items-center justify-center text-[11px] font-bold text-muted shrink-0">
                   {exp.company.slice(0, 2).toUpperCase()}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-base">{exp.company}</h3>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-semibold text-base break-words">{exp.company}</h3>
                   <span className="text-[12px] text-muted">{exp.type}</span>
                 </div>
               </div>
 
               {/* Role */}
-              <div className="ml-11 mt-4 border-l-2 border-border pl-6">
+              <div className="ml-4 sm:ml-11 mt-4 border-l-2 border-border pl-4 sm:pl-6">
                 <h4 className="font-semibold text-[15px]">{exp.role}</h4>
                 <div className="flex flex-wrap items-center gap-2 mt-1 text-[12px] font-mono text-muted">
                   <span>{exp.period}</span>
