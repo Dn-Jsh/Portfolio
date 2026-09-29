@@ -8,12 +8,12 @@ export function Hero() {
       {/* ── Profile: Photo + Name + Bio ── */}
       <ScrollReveal>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-          {/* Large profile photo */}
-          <div className="w-44 h-56 md:w-52 md:h-64 rounded-xl overflow-hidden shrink-0 border border-border">
-            {/* Replace this div with an <Image> when you have your photo */}
-            <div className="w-full h-full bg-border/30 flex items-center justify-center text-muted text-[12px] font-mono">
-              photo
-            </div>
+          <div className="w-44 h-56 md:w-52 md:h-64 rounded-xl overflow-hidden shrink-0 border border-border bg-bg relative">
+            <img
+              src="/profile-nobg.png"
+              alt="Dan Jeshua"
+              className="w-full h-full object-cover object-[50%_95%] scale-[1.6] grayscale contrast-[1.2] brightness-90 hover:grayscale-0 hover:contrast-100 transition-all duration-500"
+            />
           </div>
 
           {/* Name + Bio */}
