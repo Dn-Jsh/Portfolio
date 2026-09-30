@@ -83,10 +83,12 @@ export function Sidebar() {
           For work, collabs & everything else, reach me at
         </p>
         <a
-          href="mailto:hello@danjeshua.dev"
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=danjeshuaf%40gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex w-fit items-center gap-2 text-[13px] text-fg hover:text-muted transition-colors"
         >
-          ✉ hello@danjeshua.dev
+          ✉ danjeshuaf@gmail.com
         </a>
       </div>
     </motion.aside>
