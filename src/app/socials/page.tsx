@@ -3,6 +3,7 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { SOCIALS } from "@/data/socials";
 import { ArrowUpRight, Share2 } from "lucide-react";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
+import { InstagramQrButton } from "@/components/socials/InstagramQrButton";
 
 export const dynamic = "force-dynamic";
 
@@ -66,35 +67,36 @@ export default async function SocialsPage() {
       <div className="flex flex-col">
         {socialRows.map(({ data: social, id }, i) => (
           <ScrollReveal key={id} delay={i * 0.06}>
-            <a
-              href={social.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-row group flex items-center gap-5 py-5 border-b border-border -mx-4 px-4 rounded-lg"
-            >
-              <div className="w-10 h-10 flex items-center justify-center text-muted group-hover:text-fg transition-colors shrink-0">
-                <SocialPlatformIcon icon={social.icon} />
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                  <h3 className="font-semibold text-[15px] group-hover:text-muted transition-colors">
-                    {social.platform}
-                  </h3>
-                  <span className="text-[12px] font-mono text-muted break-all">
-                    {social.handle}
-                  </span>
+            <div className="social-row flex items-center gap-3 border-b border-border -mx-4 px-4 rounded-lg">
+              <a
+                href={social.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-profile group flex min-w-0 flex-1 items-center gap-5 py-5"
+              >
+                <div className="w-10 h-10 flex items-center justify-center text-muted group-hover:text-fg transition-colors shrink-0">
+                  <SocialPlatformIcon icon={social.icon} />
                 </div>
-                <p className="text-[13px] text-muted mt-0.5">{social.description}</p>
-              </div>
 
-              {/* Arrow */}
-              <ArrowUpRight
-                size={16}
-                className="text-muted opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
-              />
-            </a>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                    <h3 className="font-semibold text-[15px] group-hover:text-muted transition-colors">
+                      {social.platform}
+                    </h3>
+                    <span className="text-[12px] font-mono text-muted break-all">
+                      {social.handle}
+                    </span>
+                  </div>
+                  <p className="text-[13px] text-muted mt-0.5">{social.description}</p>
+                </div>
+
+                <ArrowUpRight
+                  size={16}
+                  className="text-muted opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity shrink-0"
+                />
+              </a>
+              {social.icon.toLowerCase() === "instagram" && <InstagramQrButton />}
+            </div>
           </ScrollReveal>
         ))}
       </div>

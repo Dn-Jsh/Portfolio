@@ -10,6 +10,8 @@ Use your existing project and keep its project URL and publishable key available
 
 In Supabase, open **SQL Editor**, paste the contents of `supabase/migrations/202609300001_portfolio_cms.sql`, and run it once. It creates the content tables, public image bucket, access rules, publish actions, and initial published content.
 
+For later content updates, run each newer numbered SQL migration once, in order. Current migrations refresh the Hello World post and update the Instagram profile in drafts and published content.
+
 The migration separates drafts from public content. Signed-out visitors can read only `portfolio_published`; draft rows require an allowlisted, signed-in editor.
 
 ## 3. Invite your editor account
