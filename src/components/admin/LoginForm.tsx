@@ -42,7 +42,9 @@ export function LoginForm() {
     setResetBusy(true);
     try {
       const supabase = createBrowserSupabaseClient();
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim());
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: window.location.origin,
+      });
       if (resetError) throw resetError;
       setMessage("If this address has editor access, a password reset link is on its way.");
     } catch (reason) {
