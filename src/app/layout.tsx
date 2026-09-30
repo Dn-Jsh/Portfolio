@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { HOME_DESCRIPTION, HOME_TITLE, SITE_URL } from "@/lib/seo";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,8 +24,9 @@ const silkscreen = Silkscreen({
 });
 
 export const metadata: Metadata = {
-  title: "Dan Jeshua D. Fiscal | Portfolio",
-  description: "I build web and mobile apps.",
+  metadataBase: new URL(SITE_URL),
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
 };
 
 export default function RootLayout({

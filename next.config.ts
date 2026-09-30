@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  headers() {
+    return ["/admin/:path*", "/editportfolio/:path*", "/auth/:path*"].map((source) => ({
+      source,
+      headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+    }));
+  },
   images: {
     remotePatterns: [
       {

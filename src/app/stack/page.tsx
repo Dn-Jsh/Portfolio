@@ -2,8 +2,10 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { STACK } from "@/data/stack";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/stack");
 
 export default async function StackPage() {
   const [groups, intro] = await Promise.all([

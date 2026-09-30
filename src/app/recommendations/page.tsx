@@ -3,8 +3,10 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { RECOMMENDATIONS } from "@/data/recommendations";
 import { RecommendationQuote } from "@/components/ui/RecommendationQuote";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/recommendations");
 
 export default async function RecommendationsPage() {
   const [recommendations, intro] = await Promise.all([

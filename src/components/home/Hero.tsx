@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { getPublishedItems, getSiteSettings } from "@/lib/portfolio-content";
 import { SOCIALS } from "@/data/socials";
+import { createProfileStructuredData, SITE_HANDLE } from "@/lib/seo";
 
 type SiteSettings = {
   heroKicker: string;
@@ -28,16 +29,26 @@ export async function Hero() {
     getPublishedItems<typeof SOCIALS[number]>("social", SOCIALS),
   ]);
   const socials = socialRows.map(({ data }) => data);
+  const structuredData = createProfileStructuredData(
+    `${settings.firstName} ${settings.lastName}`,
+    socials.map((social) => social.link),
+  );
   return (
     <section className="mb-24">
-      <ScrollReveal direction="left">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
+      <div>
         <div className="hero-kicker">
           <span aria-hidden="true" className="status-light" />
           {settings.heroKicker}
         </div>
-      </ScrollReveal>
+      </div>
 
-      <ScrollReveal direction="right" delay={0.08}>
+      <div>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
           <div className="hero-image-frame w-32 h-40 sm:w-44 sm:h-56 md:w-52 md:h-64 rounded-xl shrink-0 relative">
             <div className="relative h-full w-full overflow-hidden rounded-[inherit] bg-bg">
@@ -58,9 +69,13 @@ export async function Hero() {
 
           {/* Name + Bio */}
           <div className="flex-1">
-            <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-2 leading-tight">
               {settings.firstName} <span className="hero-name-accent">{settings.lastName}</span>
             </h1>
+
+            <p className="text-sm font-mono text-muted mb-6">
+              Also known as <span className="text-fg">{SITE_HANDLE}</span>
+            </p>
 
             <p className="text-[15px] text-fg/70 leading-relaxed mb-4 max-w-md">
               {settings.bioFirst}
@@ -87,7 +102,7 @@ export async function Hero() {
             </div>
           </div>
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* Profile highlights */}
       <ScrollReveal delay={0.16} direction="scale">

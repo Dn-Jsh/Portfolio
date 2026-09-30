@@ -3,8 +3,10 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { CERTIFICATIONS } from "@/data/certifications";
 import { CertificationItem } from "@/components/ui/CertificationItem";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/certifications");
 
 export default async function CertificationsPage() {
   const [rows, intro] = await Promise.all([

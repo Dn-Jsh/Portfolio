@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { cache } from "react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { getPublishedItems, getPublishedItemBySlug, type ContentRecord } from "@/lib/portfolio-content";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
@@ -18,7 +19,7 @@ export type BlogPostData = PostMeta & {
   body: import("@tiptap/core").JSONContent;
 };
 
-export async function getPostBySlug(slug: string) {
+export const getPostBySlug = cache(async (slug: string) => {
   const realSlug = slug.replace(/\.mdx$/, "");
 
   if (isSupabaseConfigured()) {
@@ -56,7 +57,7 @@ export async function getPostBySlug(slug: string) {
     content,
     isRichText: false as const,
   };
-}
+});
 
 export async function getAllPosts(): Promise<PostMeta[]> {
   if (isSupabaseConfigured()) {

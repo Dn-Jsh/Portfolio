@@ -6,12 +6,14 @@ import { CertificationsPreview } from "@/components/home/CertificationsPreview";
 import { RecommendationsPreview } from "@/components/home/RecommendationsPreview";
 import { GitHubPreview } from "@/components/home/GitHubPreview";
 import { AuthEmailLanding } from "@/components/admin/AuthEmailLanding";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/");
 
 export default function Home() {
   return (
-    <div className="page-enter">
+    <div>
       <AuthEmailLanding />
       <Hero />
       <RecentPosts />

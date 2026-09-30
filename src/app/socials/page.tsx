@@ -4,8 +4,10 @@ import { SOCIALS } from "@/data/socials";
 import { ArrowUpRight, Share2 } from "lucide-react";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
 import { InstagramQrButton } from "@/components/socials/InstagramQrButton";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/socials");
 
 function SocialPlatformIcon({ icon }: { icon: string }) {
   const className = "h-5 w-5";

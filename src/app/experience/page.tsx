@@ -2,8 +2,10 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { EXPERIENCE } from "@/data/experience";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/experience");
 
 export default async function ExperiencePage() {
   const [entries, intro] = await Promise.all([

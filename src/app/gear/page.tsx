@@ -3,8 +3,10 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GEAR, type GearItem } from "@/data/gear";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/gear");
 
 function GearShowcase({ item, number, total, featured = false }: {
   item: GearItem;

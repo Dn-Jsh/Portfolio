@@ -4,8 +4,10 @@ import { getAllPosts } from "@/lib/mdx";
 import { getPageIntro } from "@/lib/portfolio-content";
 import Image from "next/image";
 import Link from "next/link";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/blog");
 
 export default async function BlogPage() {
   const posts = await getAllPosts();

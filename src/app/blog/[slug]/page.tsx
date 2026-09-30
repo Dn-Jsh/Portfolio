@@ -5,11 +5,34 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 interface BlogPostProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: BlogPostProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+  if (!post) notFound();
+
+  const metadata = createPageMetadata(
+    `/blog/${encodeURIComponent(post.meta.slug)}`,
+    post.meta.title,
+    post.meta.description,
+  );
+
+  return {
+    ...metadata,
+    openGraph: {
+      ...metadata.openGraph,
+      type: "article",
+      ...(post.meta.coverImage ? { images: [{ url: post.meta.coverImage }] } : {}),
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: BlogPostProps) {

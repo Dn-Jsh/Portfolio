@@ -3,8 +3,10 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { PROJECTS } from "@/data/projects";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
 import { ArrowUpRight } from "lucide-react";
+import { getPublicPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = getPublicPageMetadata("/projects");
 
 export default async function ProjectsPage() {
   const [projectRows, intro] = await Promise.all([
