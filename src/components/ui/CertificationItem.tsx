@@ -1,8 +1,23 @@
 import { CERTIFICATIONS } from "@/data/certifications";
+import Image from "next/image";
 
 type Certification = (typeof CERTIFICATIONS)[number];
 
 function CertificationLogo({ provider }: { provider: string }) {
+  if (provider.startsWith("TESDA")) {
+    return (
+      <span className="grid h-14 w-14 place-items-center rounded-full bg-white p-1">
+        <Image
+          src="/certifications/tesda-logo.png"
+          alt=""
+          width={160}
+          height={160}
+          className="h-full w-full rounded-full object-contain"
+        />
+      </span>
+    );
+  }
+
   if (provider.startsWith("Amazon")) {
     return (
       <svg viewBox="0 0 180 68" className="h-14 w-36" aria-hidden="true">

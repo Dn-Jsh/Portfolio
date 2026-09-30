@@ -7,6 +7,20 @@ export const CERTIFICATIONS = [
     link: "#",
   },
   {
+    title: "Installing and Configuring Computer Systems",
+    provider: "TESDA Online Program",
+    category: "TECHNICAL",
+    date: "February 3, 2025",
+    link: "#",
+  },
+  {
+    title: "Introduction to Computer Systems Servicing",
+    provider: "TESDA Online Program",
+    category: "TECHNICAL",
+    date: "October 4, 2024",
+    link: "#",
+  },
+  {
     title: "Meta Front-End Developer",
     provider: "Meta · Coursera",
     category: "ENGINEERING",
