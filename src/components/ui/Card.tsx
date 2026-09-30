@@ -10,7 +10,7 @@ interface CardProps {
 export function Card({ children, className = "", href }: CardProps) {
   const content = (
     <div
-      className={`bg-card p-6 rounded-xl border border-border hover:bg-card-hover transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${className}`}
+      className={`interactive-card p-6 rounded-xl border border-border ${className}`}
     >
       {children}
     </div>

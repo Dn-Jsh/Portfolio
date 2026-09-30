@@ -1,48 +1,84 @@
+import { GearViewer } from "@/components/gear/GearViewer";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { GEAR } from "@/data/gear";
-import { ArrowUpRight } from "lucide-react";
+import { GEAR, type GearItem } from "@/data/gear";
+import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
 
-export default function GearPage() {
-  // Group gear by category
-  const grouped = GEAR.reduce<Record<string, typeof GEAR>>((acc, item) => {
-    const cat = item.category || "OTHER";
-    if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(item);
-    return acc;
-  }, {});
+export const dynamic = "force-dynamic";
 
+function GearShowcase({ item, number, total, featured = false }: {
+  item: GearItem;
+  number: number;
+  total: number;
+  featured?: boolean;
+}) {
   return (
-    <div className="animate-in fade-in duration-500">
-      <h1 className="text-3xl font-bold mb-3">gear</h1>
-      <p className="text-muted mb-12 max-w-xl">
-        The hardware and tools I use to build, create, and stay productive &mdash; my desk setup, everyday carry, and the software I rely on.
-      </p>
+    <article className={`gear-showcase ${featured ? "gear-showcase-featured" : ""}`}>
+      <div className="gear-stage">
+        <GearViewer item={item} featured={featured} />
+      </div>
+      <div className="gear-details">
+        <span className="gear-number">{String(number).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+        <h3 className="gear-name">{item.name}</h3>
+        <p className="gear-description">{item.description}</p>
+      </div>
+    </article>
+  );
+}
 
-      <div className="flex flex-col gap-12">
-        {Object.entries(grouped).map(([category, items], gi) => (
-          <ScrollReveal key={category} delay={gi * 0.08}>
-            <div>
-              <h2 className="text-[12px] font-mono uppercase tracking-widest text-muted mb-6">
-                {category}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {items.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group flex flex-col p-5 rounded-xl border border-border bg-card hover:bg-card-hover hover:border-muted/30 transition-all duration-200 hover:-translate-y-1"
-                  >
-                    {/* Placeholder image area */}
-                    <div className="w-full aspect-[4/3] rounded-lg bg-bg border border-border/50 flex items-center justify-center text-muted text-[11px] font-mono mb-4">
-                      photo
-                    </div>
-                    <h3 className="font-semibold text-[14px] mb-0.5 break-words">{item.name}</h3>
-                    <p className="text-[12px] text-muted leading-relaxed">{item.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+function GearSection({ title, subtitle, items, offset, total }: {
+  title: string;
+  subtitle: string;
+  items: GearItem[];
+  offset: number;
+  total: number;
+}) {
+  const [first, ...rest] = items;
+  return (
+    <section className="gear-section" aria-label={title}>
+      <ScrollReveal>
+        <div className="gear-section-heading">
+          <div>
+            <span className="gear-section-kicker">THE COLLECTION / {String(offset + 1).padStart(2, "0")}</span>
+            <h2>{title}</h2>
+          </div>
+          <p>{subtitle}</p>
+        </div>
+      </ScrollReveal>
+      {offset === 0 && first && (
+        <ScrollReveal>
+          <GearShowcase item={first} number={1} total={total} featured />
+        </ScrollReveal>
+      )}
+      <div className="gear-grid">
+        {(offset === 0 ? rest : items).map((item, index) => (
+          <ScrollReveal key={item.name} delay={index * 0.08}>
+            <GearShowcase item={item} number={offset + (offset === 0 ? index + 2 : index + 1)} total={total} />
           </ScrollReveal>
         ))}
+      </div>
+    </section>
+  );
+}
+
+export default async function GearPage() {
+  const [rows, intro] = await Promise.all([
+    getPublishedItems<GearItem>("gear", GEAR),
+    getPageIntro("gear", { title: "gear", description: "The five devices I use every day. Explore the details, from my desk to my everyday carry." }),
+  ]);
+  const gear = rows.map(({ data }) => data);
+  const deskGear = gear.filter((item) => item.category === "DESK SETUP");
+  const carryGear = gear.filter((item) => item.category === "EVERYDAY CARRY");
+
+  return (
+    <div className="page-enter">
+      <PageIntro
+        title={intro.title}
+        description={intro.description}
+      />
+      <div className="gear-collection">
+        <GearSection title="Desk setup" subtitle="The tools at my workspace." items={deskGear} offset={0} total={gear.length} />
+        <GearSection title="Everyday carry" subtitle="The essentials that go everywhere with me." items={carryGear} offset={deskGear.length} total={gear.length} />
       </div>
     </div>
   );

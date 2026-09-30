@@ -4,6 +4,8 @@ import { getAllPosts } from "@/lib/mdx";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export async function RecentPosts() {
   const posts = await getAllPosts();
   const recentPosts = posts.slice(0, 2);
@@ -23,7 +25,7 @@ export async function RecentPosts() {
         <div className="flex flex-col gap-4">
           {recentPosts.map((post, i) => (
             <ScrollReveal key={post.slug} delay={i * 0.1}>
-              <Link href={`/blog/${post.slug}`} className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center group py-2 gap-1 sm:gap-4">
+              <Link href={`/blog/${post.slug}`} className="project-row flex flex-col sm:flex-row sm:justify-between items-start sm:items-center group py-2 gap-1 sm:gap-4 rounded-md">
                 <span className="text-lg font-medium group-hover:text-muted transition-colors break-words">{post.title}</span>
                 <span className="text-sm font-mono text-muted shrink-0">
                   {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}

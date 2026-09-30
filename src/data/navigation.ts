@@ -1,6 +1,5 @@
 import {
   Newspaper,
-  FolderKanban,
   Monitor,
   Share2,
   type LucideIcon,

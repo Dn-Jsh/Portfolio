@@ -1,17 +1,25 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { EXPERIENCE } from "@/data/experience";
+import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
 
-export default function ExperiencePage() {
+export const dynamic = "force-dynamic";
+
+export default async function ExperiencePage() {
+  const [entries, intro] = await Promise.all([
+    getPublishedItems<typeof EXPERIENCE[number]>("experience", EXPERIENCE),
+    getPageIntro("experience", { title: "experience", description: "Building across web and mobile development — from freelance projects to team collaborations." }),
+  ]);
   return (
-    <div className="animate-in fade-in duration-500">
-      <h1 className="text-3xl font-bold mb-3">experience</h1>
-      <p className="text-muted mb-12 max-w-xl">
-        Building across web and mobile development &mdash; from freelance projects to team collaborations.
-      </p>
+    <div className="page-enter">
+      <PageIntro
+        title={intro.title}
+        description={intro.description}
+      />
 
       <div className="flex flex-col">
-        {EXPERIENCE.map((exp, i) => (
-          <ScrollReveal key={i} delay={i * 0.08}>
+        {entries.map(({ data: exp, id }, i) => (
+          <ScrollReveal key={id} delay={i * 0.08}>
             <div className="py-8 border-b border-border first:border-t">
               {/* Company header */}
               <div className="flex items-center gap-3 mb-1">

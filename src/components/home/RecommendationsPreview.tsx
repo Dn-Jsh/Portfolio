@@ -1,10 +1,13 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { RECOMMENDATIONS } from "@/data/recommendations";
+import { RecommendationQuote } from "@/components/ui/RecommendationQuote";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { getPublishedItems } from "@/lib/portfolio-content";
 
-export function RecommendationsPreview() {
+export async function RecommendationsPreview() {
+  const recommendations = await getPublishedItems<typeof RECOMMENDATIONS[number]>("recommendation", RECOMMENDATIONS);
   return (
     <section className="mb-20">
       <ScrollReveal>
@@ -22,39 +25,10 @@ export function RecommendationsPreview() {
         />
       </ScrollReveal>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {RECOMMENDATIONS.slice(0, 3).map((rec, i) => (
-          <ScrollReveal key={rec.name} delay={i * 0.06}>
-            <div className="flex flex-col h-full p-5 rounded-xl border border-border">
-              {/* Quote mark */}
-              <span className="text-2xl leading-none text-muted/30 font-serif mb-3">
-                &ldquo;&rdquo;
-              </span>
-
-              {/* Quote text */}
-              <p className="text-[13px] text-fg/80 leading-relaxed flex-1 mb-5 line-clamp-4">
-                {rec.quote}
-              </p>
-
-              {/* Attribution */}
-              <div className="flex items-center gap-2.5 mt-auto pt-3 border-t border-border/50">
-                <div className="w-7 h-7 rounded-full border border-border flex items-center justify-center text-[10px] font-bold text-muted shrink-0">
-                  {rec.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .toUpperCase()}
-                </div>
-                <div className="min-w-0">
-                  <h4 className="font-semibold text-[12px] truncate">
-                    {rec.name}
-                  </h4>
-                  <p className="text-[10px] text-muted uppercase tracking-wider truncate">
-                    {rec.role}
-                  </p>
-                </div>
-              </div>
-            </div>
+      <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
+        {recommendations.slice(0, 3).map(({ data: rec, id }, i) => (
+          <ScrollReveal key={id} delay={i * 0.06} className={i === 0 ? "sm:col-span-2" : undefined}>
+            <RecommendationQuote rec={rec} />
           </ScrollReveal>
         ))}
       </div>

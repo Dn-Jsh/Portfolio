@@ -1,24 +1,32 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { PROJECTS } from "@/data/projects";
-import Link from "next/link";
+import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
 import { ArrowUpRight } from "lucide-react";
 
-export default function ProjectsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ProjectsPage() {
+  const [projectRows, intro] = await Promise.all([
+    getPublishedItems<typeof PROJECTS[number]>("project", PROJECTS),
+    getPageIntro("projects", { title: "projects", description: "Products and platforms I've designed and shipped — spanning web apps, mobile apps, and developer tools." }),
+  ]);
+  const projects = projectRows.map((row) => ({ ...row.data, id: row.id }));
   return (
-    <div className="animate-in fade-in duration-500">
-      <h1 className="text-3xl font-bold mb-3">projects</h1>
-      <p className="text-muted mb-12 max-w-xl">
-        Products and platforms I&apos;ve designed and shipped &mdash; spanning web apps, mobile apps, and developer tools.
-      </p>
+    <div className="page-enter">
+      <PageIntro
+        title={intro.title}
+        description={intro.description}
+      />
 
       <div className="flex flex-col">
-        {PROJECTS.map((project, i) => (
+        {projects.map((project, i) => (
           <ScrollReveal key={project.id} delay={i * 0.08}>
             <a
               href={project.link}
               target={project.link.startsWith("http") ? "_blank" : undefined}
               rel={project.link.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="group block py-6 border-b border-border first:border-t transition-colors hover:bg-card/50 -mx-4 px-4 rounded-lg"
+              className="project-row group block py-6 border-b border-border first:border-t hover:bg-card/50 -mx-4 px-4 rounded-lg"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex items-center gap-3">

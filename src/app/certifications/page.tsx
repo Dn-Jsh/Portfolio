@@ -1,10 +1,19 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { CERTIFICATIONS } from "@/data/certifications";
-import { ArrowUpRight } from "lucide-react";
+import { CertificationItem } from "@/components/ui/CertificationItem";
+import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
 
-export default function CertificationsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function CertificationsPage() {
+  const [rows, intro] = await Promise.all([
+    getPublishedItems<typeof CERTIFICATIONS[number]>("certification", CERTIFICATIONS),
+    getPageIntro("certifications", { title: "certifications", description: "Credentials across cloud, engineering, and development — each verifiable at its source." }),
+  ]);
+  const certifications = rows.map((row) => row.data);
   // Group certifications by category
-  const grouped = CERTIFICATIONS.reduce<Record<string, typeof CERTIFICATIONS>>((acc, cert) => {
+  const grouped = certifications.reduce<Record<string, typeof certifications>>((acc, cert) => {
     const cat = cert.category || "OTHER";
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(cert);
@@ -12,11 +21,11 @@ export default function CertificationsPage() {
   }, {});
 
   return (
-    <div className="animate-in fade-in duration-500">
-      <h1 className="text-3xl font-bold mb-3">certifications</h1>
-      <p className="text-muted mb-12 max-w-xl">
-        Credentials across cloud, engineering, and development &mdash; each verifiable at its source.
-      </p>
+    <div className="page-enter">
+      <PageIntro
+        title={intro.title}
+        description={intro.description}
+      />
 
       <div className="flex flex-col gap-12">
         {Object.entries(grouped).map(([category, certs], gi) => (
@@ -25,26 +34,9 @@ export default function CertificationsPage() {
               <h2 className="text-[12px] font-mono uppercase tracking-widest text-muted mb-6">
                 {category}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
                 {certs.map((cert) => (
-                  <a
-                    key={cert.title}
-                    href={cert.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card hover:bg-card-hover hover:border-muted/30 transition-all duration-200 hover:-translate-y-1"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-bg border border-border flex items-center justify-center text-[11px] font-bold text-muted mb-4">
-                      {cert.provider.slice(0, 2).toUpperCase()}
-                    </div>
-                    <h3 className="font-semibold text-[14px] leading-snug mb-1 break-words">
-                      {cert.title}
-                    </h3>
-                    <p className="text-[12px] text-muted mb-4">{cert.provider}</p>
-                    <span className="text-[11px] font-mono text-muted flex items-center gap-1 mt-auto">
-                      VERIFY <ArrowUpRight size={11} />
-                    </span>
-                  </a>
+                  <CertificationItem key={cert.title} cert={cert} />
                 ))}
               </div>
             </div>

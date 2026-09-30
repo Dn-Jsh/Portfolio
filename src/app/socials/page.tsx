@@ -1,23 +1,28 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { SOCIALS } from "@/data/socials";
 import { ArrowUpRight } from "lucide-react";
+import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
 
-export default function SocialsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function SocialsPage() {
+  const [socialRows, intro] = await Promise.all([
+    getPublishedItems<typeof SOCIALS[number]>("social", SOCIALS),
+    getPageIntro("socials", { title: "socials", description: "Where to find me across the internet." }),
+  ]);
   return (
-    <div className="animate-in fade-in duration-500">
-      <h1 className="text-3xl font-bold mb-3">socials</h1>
-      <p className="text-muted mb-12 max-w-xl">
-        Where to find me across the internet.
-      </p>
+    <div className="page-enter">
+      <PageIntro title={intro.title} description={intro.description} />
 
       <div className="flex flex-col">
-        {SOCIALS.map((social, i) => (
-          <ScrollReveal key={social.platform} delay={i * 0.06}>
+        {socialRows.map(({ data: social, id }, i) => (
+          <ScrollReveal key={id} delay={i * 0.06}>
             <a
               href={social.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-5 py-5 border-b border-border hover:bg-card/50 -mx-4 px-4 rounded-lg transition-colors"
+              className="social-row group flex items-center gap-5 py-5 border-b border-border -mx-4 px-4 rounded-lg"
             >
               {/* Platform icon circle */}
               <div className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-[13px] font-bold text-muted group-hover:text-fg group-hover:border-muted/40 transition-colors shrink-0">

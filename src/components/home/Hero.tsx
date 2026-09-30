@@ -1,47 +1,87 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { SOCIALS } from "@/data/socials";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { getPublishedItems, getSiteSettings } from "@/lib/portfolio-content";
+import { SOCIALS } from "@/data/socials";
 
-export function Hero() {
+type SiteSettings = {
+  heroKicker: string;
+  firstName: string;
+  lastName: string;
+  bioFirst: string;
+  bioSecond: string;
+  profileImage: string;
+  stats: Array<{ value: string; label: string }>;
+};
+
+export async function Hero() {
+  const [settings, socialRows] = await Promise.all([
+    getSiteSettings<SiteSettings>({
+      heroKicker: "Full-stack developer · BSIT / PUP",
+      firstName: "Dan",
+      lastName: "Jeshua",
+      bioFirst: "I'm a full-stack developer and 4th-year BSIT student at PUP. I build modern web & mobile apps, and these days I'm focused on shipping real products.",
+      bioSecond: "Right now I'm freelancing, sharpening my craft, and working toward landing a dev role and building my own startup.",
+      profileImage: "/profile-nobg.png",
+      stats: [{ value: "10+", label: "Projects Shipped" }, { value: "3+ yrs", label: "Building" }, { value: "4th yr", label: "BSIT · PUP" }],
+    }),
+    getPublishedItems<typeof SOCIALS[number]>("social", SOCIALS),
+  ]);
+  const socials = socialRows.map(({ data }) => data);
   return (
     <section className="mb-24">
-      {/* ── Profile: Photo + Name + Bio ── */}
-      <ScrollReveal>
+      <ScrollReveal direction="left">
+        <div className="hero-kicker">
+          <span aria-hidden="true" className="status-light" />
+          {settings.heroKicker}
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal direction="right" delay={0.08}>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-          <div className="w-32 h-40 sm:w-44 sm:h-56 md:w-52 md:h-64 rounded-xl overflow-hidden shrink-0 border border-border bg-bg relative">
-            <img
-              src="/profile-nobg.png"
-              alt="Dan Jeshua"
-              className="w-full h-full object-cover object-[50%_95%] scale-[1.6] grayscale contrast-[1.2] brightness-90 hover:grayscale-0 hover:contrast-100 transition-all duration-500"
-            />
+          <div className="hero-image-frame w-32 h-40 sm:w-44 sm:h-56 md:w-52 md:h-64 rounded-xl shrink-0 relative">
+            <div className="relative h-full w-full overflow-hidden rounded-[inherit] bg-bg">
+              <Image
+                src={settings.profileImage || "/profile-nobg.png"}
+                alt={`${settings.firstName} ${settings.lastName}`}
+                fill
+                sizes="(max-width: 640px) 128px, (max-width: 768px) 176px, 208px"
+                fetchPriority="high"
+                unoptimized
+                className="hero-photo w-full h-full object-cover object-[50%_95%] scale-[1.6] grayscale contrast-[1.2] brightness-90 hover:grayscale-0 hover:contrast-100"
+              />
+            </div>
+            <span aria-hidden="true" className="absolute bottom-3 left-3 z-[4] rounded-full border border-white/20 bg-black/55 px-2 py-1 font-mono text-[9px] tracking-widest text-white/80 backdrop-blur-sm">
+              PORTRAIT / 01
+            </span>
           </div>
 
           {/* Name + Bio */}
           <div className="flex-1">
-            <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6">
-              Dan Jeshua
+            <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6 leading-tight">
+              {settings.firstName} <span className="hero-name-accent">{settings.lastName}</span>
             </h1>
 
             <p className="text-[15px] text-fg/70 leading-relaxed mb-4 max-w-md">
-              I&apos;m a full-stack developer and 4th-year BSIT student at PUP. I build modern web &amp; mobile apps, and these days I&apos;m focused on shipping real products.
+              {settings.bioFirst}
             </p>
 
             <p className="text-[15px] text-fg/70 leading-relaxed mb-8 max-w-md">
-              Right now I&apos;m freelancing, sharpening my craft, and working toward landing a dev role and building my own startup.
+              {settings.bioSecond}
             </p>
 
             {/* Social links */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
-              {SOCIALS.slice(0, 5).map((social) => (
+              {socials.slice(0, 5).map((social) => (
                 <a
                   key={social.platform}
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted hover:text-fg transition-colors flex items-center gap-1"
+                  className="hero-social-link text-muted flex items-center gap-1"
                 >
                   {social.platform.toLowerCase()}
-                  <ArrowUpRight size={13} className="opacity-60" />
+                  <ArrowUpRight size={13} className="opacity-60" aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -49,33 +89,15 @@ export function Hero() {
         </div>
       </ScrollReveal>
 
-      {/* ── Stats row ── */}
-      <ScrollReveal delay={0.12}>
+      {/* Profile highlights */}
+      <ScrollReveal delay={0.16} direction="scale">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-4 mt-12 pt-8 border-t border-border">
-          <div>
-            <div className="text-2xl md:text-3xl font-bold tracking-tight">
-              10+
+          {settings.stats.map((stat, index) => (
+            <div key={`${stat.label}-${index}`} className="hero-stat">
+              <div className="hero-stat-value text-2xl md:text-3xl font-bold tracking-tight">{stat.value}</div>
+              <span className="text-[11px] font-mono uppercase tracking-widest text-muted mt-1 block">{stat.label}</span>
             </div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-muted mt-1 block">
-              Projects Shipped
-            </span>
-          </div>
-          <div>
-            <div className="text-2xl md:text-3xl font-bold tracking-tight">
-              3+ yrs
-            </div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-muted mt-1 block">
-              Building
-            </span>
-          </div>
-          <div>
-            <div className="text-2xl md:text-3xl font-bold tracking-tight">
-              4th yr
-            </div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-muted mt-1 block">
-              BSIT · PUP
-            </span>
-          </div>
+          ))}
         </div>
       </ScrollReveal>
     </section>

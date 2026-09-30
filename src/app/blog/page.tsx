@@ -1,16 +1,19 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { getAllPosts } from "@/lib/mdx";
+import { getPageIntro } from "@/lib/portfolio-content";
+import Image from "next/image";
 import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 
 export default async function BlogPage() {
   const posts = await getAllPosts();
+  const intro = await getPageIntro("blog", { title: "blog", description: "Thoughts, tutorials, and notes on tech, engineering, and building things." });
 
   return (
-    <div className="animate-in fade-in duration-500">
-      <h1 className="text-3xl font-bold mb-3">blog</h1>
-      <p className="text-muted mb-12 max-w-xl">
-        Thoughts, tutorials, and notes on tech, engineering, and building things.
-      </p>
+    <div className="page-enter">
+      <PageIntro title={intro.title} description={intro.description} />
 
       <div className="flex flex-col">
         {posts.map((post, i) => (
@@ -19,9 +22,8 @@ export default async function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group flex flex-col sm:flex-row gap-4 sm:gap-6 py-6 border-b border-border hover:bg-card/50 -mx-4 px-4 rounded-lg transition-colors"
             >
-              {/* Thumbnail placeholder */}
-              <div className="w-full sm:w-28 h-40 sm:h-20 rounded-lg bg-card border border-border/50 flex items-center justify-center text-muted text-[10px] font-mono shrink-0">
-                cover
+              <div className="relative w-full sm:w-28 h-40 sm:h-20 rounded-lg bg-card border border-border/50 flex items-center justify-center text-muted text-[10px] font-mono shrink-0 overflow-hidden">
+                {post.coverImage ? <Image src={post.coverImage} alt="" fill unoptimized sizes="(max-width: 640px) 100vw, 112px" className="object-cover" /> : "cover"}
               </div>
 
               {/* Content */}

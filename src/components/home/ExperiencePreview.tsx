@@ -2,12 +2,19 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { EXPERIENCE } from "@/data/experience";
 import { STACK } from "@/data/stack";
+import { getPublishedItems } from "@/lib/portfolio-content";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-export function ExperiencePreview() {
+export async function ExperiencePreview() {
+  const [experienceRows, stackRows] = await Promise.all([
+    getPublishedItems<typeof EXPERIENCE[number]>("experience", EXPERIENCE),
+    getPublishedItems<typeof STACK[number]>("stack_group", STACK),
+  ]);
+  const experience = experienceRows.map(({ data }) => data);
+  const stack = stackRows.map(({ data }) => data);
   // Flatten all stack items, show first 10
-  const allItems = STACK.flatMap((g) => g.items);
+  const allItems = stack.flatMap((g) => g.items);
   const previewItems = allItems.slice(0, 10);
   const remaining = allItems.length - previewItems.length;
 
@@ -30,7 +37,7 @@ export function ExperiencePreview() {
 
       {/* Experience table */}
       <div className="flex flex-col">
-        {EXPERIENCE.map((exp, i) => (
+        {experience.map((exp, i) => (
           <ScrollReveal key={i} delay={i * 0.06}>
             <div className="flex sm:items-baseline gap-4 py-3.5 border-b border-border">
               <span className="text-[13px] font-mono text-muted w-16 shrink-0 pt-0.5 sm:pt-0">

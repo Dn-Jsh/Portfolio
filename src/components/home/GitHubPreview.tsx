@@ -1,7 +1,7 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import type { CSSProperties } from "react";
 
 export function GitHubPreview() {
   return (
@@ -48,10 +48,13 @@ export function GitHubPreview() {
                 "opacity-[0.85]",
               ];
 
+              const cellDelay = ((i % 52) * 8 + Math.floor(i / 52) * 12) % 520;
+
               return (
                 <div
                   key={i}
-                  className={`w-[10px] h-[10px] rounded-[2px] bg-fg ${opacities[level]}`}
+                  className={`contribution-dot w-[10px] h-[10px] rounded-[2px] bg-fg ${opacities[level]}`}
+                  style={{ "--cell-delay": `${cellDelay}ms` } as CSSProperties}
                 />
               );
             })}
