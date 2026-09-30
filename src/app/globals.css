@@ -408,6 +408,17 @@ a.certification-item:hover svg {
   pointer-events: none;
 }
 
+.gear-model-pending {
+  position: absolute;
+  inset: 9% 3% 7%;
+  transition: opacity 260ms ease, visibility 260ms ease;
+}
+
+.gear-view-surface:has(.gear-model) .gear-model-pending {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .gear-viewer .gear-drag-hint {
   top: 1.3rem;
 }
@@ -527,6 +538,18 @@ a.certification-item:hover svg {
 
 .gear-model.is-ready .gear-poster {
   opacity: 0;
+}
+
+.gear-model-failure {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: 1.45rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  pointer-events: none;
 }
 
 .gear-drag-hint {

@@ -49,7 +49,17 @@ export function GearViewer({ item, featured = false }: { item: GearItem; feature
           </div>
         ) : (
           <>
-            <span className="gear-model-notice">Approximate 3D model</span>
+            <div className="gear-model-pending" aria-hidden="true">
+              <Image
+                src={item.image}
+                alt=""
+                fill
+                sizes={featured ? "(max-width: 700px) 90vw, 50vw" : "(max-width: 560px) 90vw, 35vw"}
+                unoptimized
+                className="object-contain"
+              />
+            </div>
+            <span className="gear-model-notice">Custom 3D model · hidden details estimated</span>
             <GearModel kind={item.model} name={item.name} fallbackImage={item.image} />
           </>
         )}
