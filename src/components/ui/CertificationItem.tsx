@@ -6,7 +6,7 @@ type Certification = (typeof CERTIFICATIONS)[number];
 function CertificationLogo({ provider }: { provider: string }) {
   if (provider.startsWith("TESDA")) {
     return (
-      <span className="grid h-14 w-14 place-items-center rounded-full bg-white p-1">
+      <span className="grid h-14 w-14 place-items-center">
         <Image
           src="/certifications/tesda-logo.png"
           alt=""
