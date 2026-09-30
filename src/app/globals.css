@@ -417,7 +417,7 @@ a.certification-item:hover svg {
   inset: 9% 3% 7%;
   background: transparent;
   border: 0;
-  cursor: zoom-in;
+  cursor: default;
   --photo-x: 0deg;
   --photo-y: 0deg;
 }
@@ -445,8 +445,7 @@ a.certification-item:hover svg {
   filter: drop-shadow(0 16px 12px rgb(0 0 0 / 15%));
 }
 
-.gear-photo:hover .gear-photo-float,
-.gear-photo:focus-visible .gear-photo-float {
+.gear-photo:hover .gear-photo-float {
   animation-play-state: paused;
 }
 
@@ -483,80 +482,9 @@ a.certification-item:hover svg {
   color: var(--fg);
 }
 
-.gear-view-toolbar button:focus-visible,
-.gear-photo:focus-visible,
-.gear-lightbox button:focus-visible,
-.gear-lightbox a:focus-visible {
+.gear-view-toolbar button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
-}
-
-.gear-lightbox {
-  margin: auto;
-  padding: 0;
-  width: min(64rem, calc(100vw - 2rem));
-  max-height: calc(100dvh - 2rem);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  background: var(--bg);
-  color: var(--fg);
-  overscroll-behavior: contain;
-}
-
-.gear-lightbox::backdrop {
-  background: rgb(0 0 0 / 78%);
-  backdrop-filter: blur(8px);
-}
-
-body:has(.gear-lightbox[open]) {
-  overflow: hidden;
-}
-
-.gear-lightbox-content {
-  padding: clamp(1rem, 3vw, 1.8rem);
-}
-
-.gear-lightbox-header,
-.gear-lightbox footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.gear-lightbox-header p {
-  color: var(--accent);
-  font: 0.65rem var(--font-mono);
-  margin-bottom: 0.5rem;
-}
-
-.gear-lightbox-header h2 {
-  font-size: clamp(0.9rem, 2vw, 1.3rem);
-}
-
-.gear-lightbox-close {
-  width: 2.75rem;
-  height: 2.75rem;
-  flex: 0 0 auto;
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-
-.gear-lightbox-image {
-  position: relative;
-  height: min(64dvh, 44rem);
-  margin-block: 1.2rem;
-}
-
-.gear-lightbox footer {
-  font-size: 0.72rem;
-  color: var(--muted);
-  flex-wrap: wrap;
-}
-
-.gear-lightbox footer a {
-  color: var(--accent);
-  white-space: nowrap;
 }
 
 @keyframes gear-photo-hover {
