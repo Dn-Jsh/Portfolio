@@ -1,5 +1,12 @@
 export const CERTIFICATIONS = [
   {
+    title: "Leveraging ICT Competitiveness in AI Era",
+    provider: "DICT Aurora",
+    category: "TECHNICAL",
+    date: "April 23, 2026",
+    link: "#",
+  },
+  {
     title: "AWS Certified Cloud Practitioner",
     provider: "Amazon Web Services",
     category: "CLOUD",

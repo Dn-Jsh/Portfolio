@@ -4,6 +4,20 @@ import Image from "next/image";
 type Certification = (typeof CERTIFICATIONS)[number];
 
 function CertificationLogo({ provider }: { provider: string }) {
+  if (provider.startsWith("DICT")) {
+    return (
+      <span className="grid h-14 w-28 place-items-center">
+        <Image
+          src="/certifications/dict-region-iii-logo.png"
+          alt=""
+          width={180}
+          height={90}
+          className="h-full w-full object-contain dark:brightness-200"
+        />
+      </span>
+    );
+  }
+
   if (provider.startsWith("TESDA")) {
     return (
       <span className="grid h-14 w-14 place-items-center">
