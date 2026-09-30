@@ -7,12 +7,16 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminSetupPage() {
   let canSetPassword = false;
+  let signedIn = false;
+  let accessCheckFailed = false;
 
   if (isSupabaseConfigured()) {
     const supabase = await createServerSupabaseClient();
     const { data: auth } = await supabase.auth.getClaims();
     if (auth?.claims?.sub) {
-      const { data: isEditor } = await supabase.rpc("is_portfolio_editor");
+      signedIn = true;
+      const { data: isEditor, error } = await supabase.rpc("is_portfolio_editor");
+      accessCheckFailed = Boolean(error);
       canSetPassword = isEditor === true;
     }
   }
@@ -24,7 +28,11 @@ export default async function AdminSetupPage() {
       <p className="mt-2 text-sm text-muted">Choose a password for future sign-ins to your portfolio editor.</p>
     </div>
     {canSetPassword ? <SetPasswordForm /> : <div role="alert" className="rounded-xl border border-border bg-card/40 p-5 text-sm leading-relaxed text-muted">
-      This link is invalid or expired, or this account does not have editor access. Request a new invitation and open its latest link.
+      {!signedIn
+        ? "The reset link did not create a sign-in session. Request a new link and open it in the same browser and device where you requested it. If your email opens links in Chrome, request the reset from Chrome too."
+        : accessCheckFailed
+          ? "You're signed in, but the editor access check could not be completed. Try again shortly."
+          : "You're signed in, but this account is not on the portfolio editor allowlist. Ask the Supabase project owner to add your account to portfolio_editors."}
     </div>}
     <Link href="/editportfolio/login" className="mt-7 text-sm text-muted hover:text-fg">Back to sign in</Link>
   </div>;

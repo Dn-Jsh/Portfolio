@@ -46,7 +46,7 @@ export function LoginForm() {
         redirectTo: window.location.origin,
       });
       if (resetError) throw resetError;
-      setMessage("If this address has editor access, a password reset link is on its way.");
+      setMessage("If this address has an account, a reset link is on its way. Open it in this same browser and device.");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Could not send a reset link.");
     } finally {
