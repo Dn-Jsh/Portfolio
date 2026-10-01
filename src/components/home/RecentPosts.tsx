@@ -22,22 +22,22 @@ export async function RecentPosts() {
             </Link>
           }
         />
-        <div className="flex flex-col gap-4">
-          {recentPosts.map((post, i) => (
-            <ScrollReveal key={post.slug} delay={i * 0.1}>
-              <Link href={`/blog/${post.slug}`} className="project-row flex flex-col sm:flex-row sm:justify-between items-start sm:items-center group py-2 gap-1 sm:gap-4 rounded-md">
-                <span className="text-lg font-medium group-hover:text-muted transition-colors break-words">{post.title}</span>
-                <span className="text-sm font-mono text-muted shrink-0">
-                  {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
-                </span>
-              </Link>
-            </ScrollReveal>
-          ))}
-          {recentPosts.length === 0 && (
-            <p className="text-muted">No posts found.</p>
-          )}
-        </div>
       </ScrollReveal>
+      <div className="flex flex-col gap-4">
+        {recentPosts.map((post, i) => (
+          <ScrollReveal key={post.slug} delay={i * 0.1}>
+            <Link href={`/blog/${post.slug}`} className="project-row flex flex-col sm:flex-row sm:justify-between items-start sm:items-center group py-2 gap-1 sm:gap-4 rounded-md">
+              <span className="text-lg font-medium group-hover:text-muted transition-colors break-words">{post.title}</span>
+              <span className="text-sm font-mono text-muted shrink-0">
+                {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
+              </span>
+            </Link>
+          </ScrollReveal>
+        ))}
+        {recentPosts.length === 0 && (
+          <p className="text-muted">No posts found.</p>
+        )}
+      </div>
     </section>
   );
 }

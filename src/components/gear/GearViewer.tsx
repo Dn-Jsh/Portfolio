@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { GearItem } from "@/data/gear";
 
 const GearModel = dynamic(() => import("./GearModel").then((module) => module.GearModel), {
@@ -13,17 +13,33 @@ const GearModel = dynamic(() => import("./GearModel").then((module) => module.Ge
 export function GearViewer({ item, featured = false }: { item: GearItem; featured?: boolean }) {
   const [mode, setMode] = useState<"image" | "model">("image");
   const photoRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const frameRef = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+  }, []);
 
   const tilt = (event: PointerEvent<HTMLDivElement>) => {
     if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-    event.currentTarget.style.setProperty("--photo-x", `${-y * 5}deg`);
-    event.currentTarget.style.setProperty("--photo-y", `${x * 7}deg`);
+    pointerRef.current = { x: event.clientX, y: event.clientY };
+    if (frameRef.current !== null) return;
+
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
+      const photo = photoRef.current;
+      if (!photo) return;
+      const bounds = photo.getBoundingClientRect();
+      const x = (pointerRef.current.x - bounds.left) / bounds.width - 0.5;
+      const y = (pointerRef.current.y - bounds.top) / bounds.height - 0.5;
+      photo.style.setProperty("--photo-x", `${-y * 5}deg`);
+      photo.style.setProperty("--photo-y", `${x * 7}deg`);
+    });
   };
 
   const resetTilt = () => {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    frameRef.current = null;
     photoRef.current?.style.setProperty("--photo-x", "0deg");
     photoRef.current?.style.setProperty("--photo-y", "0deg");
   };

@@ -45,7 +45,7 @@ function MobileNavContent({ pathname }: { pathname: string }) {
 
   return (
     <>
-      <header className="mobile-nav-header lg:hidden sticky top-0 z-50 flex items-center justify-between bg-bg/95 backdrop-blur-md border-b border-border">
+      <header className="mobile-nav-header lg:hidden sticky top-0 z-50 flex items-center justify-between bg-bg border-b border-border">
         <Link href="/" className="inline-flex min-h-11 items-center font-semibold font-display text-[14px]">Dn_Jsh</Link>
         <button type="button" onClick={() => setIsOpen(true)} className="inline-flex h-11 w-11 items-center justify-center text-fg" aria-label="Open menu" aria-expanded={isOpen} aria-controls="mobile-navigation" aria-haspopup="dialog">
           <Menu size={20} aria-hidden="true" />

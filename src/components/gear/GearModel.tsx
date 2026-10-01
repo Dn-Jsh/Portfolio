@@ -98,7 +98,7 @@ export function GearModel({ kind, name, fallbackImage, featured = false }: GearM
     let reducedMotion = motionQuery.matches;
     let dragging = false;
     let hasInteracted = false;
-    let visible = true;
+    let visible = false;
     let disposed = false;
     const onMotionChange = (event: MediaQueryListEvent) => { reducedMotion = event.matches; };
     const onPointerDown = () => { dragging = true; hasInteracted = true; };
@@ -157,11 +157,6 @@ export function GearModel({ kind, name, fallbackImage, featured = false }: GearM
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(mount);
 
-    const visibilityObserver = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-    }, { rootMargin: "150px" });
-    visibilityObserver.observe(mount);
-
     resetRef.current = () => {
       if (!model) return;
       model.rotation.set(0, 0, 0);
@@ -171,11 +166,9 @@ export function GearModel({ kind, name, fallbackImage, featured = false }: GearM
     };
 
     let lastTime = 0;
-    renderer.setAnimationLoop((time) => {
-      if (!visible || document.hidden || !model) {
-        lastTime = time;
-        return;
-      }
+    let frameLoopActive = false;
+    const renderFrame = (time: number) => {
+      if (!model) return;
       const delta = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0.016;
       lastTime = time;
       if (!reducedMotion && !dragging) {
@@ -185,7 +178,22 @@ export function GearModel({ kind, name, fallbackImage, featured = false }: GearM
       }
       controls.update(delta);
       renderer.render(scene, camera);
-    });
+    };
+
+    const syncAnimationLoop = () => {
+      const shouldAnimate = visible && !document.hidden && model !== null;
+      if (shouldAnimate === frameLoopActive) return;
+      frameLoopActive = shouldAnimate;
+      lastTime = 0;
+      renderer.setAnimationLoop(shouldAnimate ? renderFrame : null);
+    };
+
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      syncAnimationLoop();
+    }, { rootMargin: "150px" });
+    visibilityObserver.observe(mount);
+    document.addEventListener("visibilitychange", syncAnimationLoop);
 
     let loadedAsset: THREE.Object3D | null = null;
     new GLTFLoader().load(
@@ -214,6 +222,7 @@ export function GearModel({ kind, name, fallbackImage, featured = false }: GearM
         controls.saveState();
         mount.parentElement?.classList.add("is-ready");
         renderer.render(scene, camera);
+        syncAnimationLoop();
       },
       undefined,
       () => {
@@ -226,6 +235,7 @@ export function GearModel({ kind, name, fallbackImage, featured = false }: GearM
       disposed = true;
       renderer.setAnimationLoop(null);
       visibilityObserver.disconnect();
+      document.removeEventListener("visibilitychange", syncAnimationLoop);
       resizeObserver.disconnect();
       motionQuery.removeEventListener("change", onMotionChange);
       renderer.domElement.removeEventListener("pointerdown", onPointerDown);

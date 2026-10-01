@@ -57,6 +57,7 @@ export async function Hero() {
                 alt={`${settings.firstName} ${settings.lastName}`}
                 fill
                 sizes="(max-width: 639px) 128px, (max-width: 1279px) 176px, 208px"
+                loading="eager"
                 fetchPriority="high"
                 unoptimized
                 className="hero-photo w-full h-full object-cover object-[50%_95%] scale-[1.6] grayscale contrast-[1.2] brightness-90 hover:grayscale-0 hover:contrast-100"
