@@ -15,7 +15,7 @@ export function Sidebar() {
       initial={prefersReducedMotion ? false : { opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: prefersReducedMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
-      className="hidden md:flex flex-col fixed top-0 left-0 h-screen w-56 border-r border-border bg-bg px-7 py-8 overflow-y-auto z-50"
+      className="hidden lg:flex flex-col fixed top-0 left-0 h-dvh w-56 border-r border-border bg-bg px-6 py-8 overflow-y-auto z-50"
     >
       {/* Logo / Name */}
       <Link
@@ -53,7 +53,7 @@ export function Sidebar() {
                     <Link
                       href={link.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`nav-link relative inline-flex w-fit items-center gap-2.5 ${
+                      className={`nav-link relative inline-flex min-h-8 items-center gap-2.5 ${
                         isActive ? "text-fg font-medium" : "text-muted hover:text-fg"
                       }`}
                     >
@@ -86,7 +86,7 @@ export function Sidebar() {
           href="https://mail.google.com/mail/?view=cm&fs=1&to=danjeshuaf%40gmail.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex w-fit items-center gap-2 text-[13px] text-fg hover:text-muted transition-colors"
+          className="inline-flex min-h-11 items-center gap-2 break-all text-[12px] text-fg hover:text-muted transition-colors"
         >
           ✉ danjeshuaf@gmail.com
         </a>

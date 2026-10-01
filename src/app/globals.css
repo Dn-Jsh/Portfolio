@@ -16,6 +16,7 @@
 }
 
 :root {
+  --page-gutter: clamp(1rem, 4vw, 3rem);
   color-scheme: light;
   --bg: #f5f5f0;
   --fg: #171914;
@@ -112,6 +113,164 @@ body::-webkit-scrollbar {
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 4px;
+  }
+
+  :where(input, textarea, select) {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+.site-content {
+  container: content / inline-size;
+  padding: clamp(2rem, 6vw, 5rem) var(--page-gutter);
+  padding-left: max(var(--page-gutter), env(safe-area-inset-left));
+  padding-right: max(var(--page-gutter), env(safe-area-inset-right));
+  padding-bottom: max(3rem, env(safe-area-inset-bottom));
+  overflow-wrap: anywhere;
+}
+
+[data-motion-reveal] {
+  min-width: 0;
+}
+
+.mobile-nav-header {
+  padding: max(0.75rem, env(safe-area-inset-top)) max(var(--page-gutter), env(safe-area-inset-right)) 0.75rem max(var(--page-gutter), env(safe-area-inset-left));
+}
+
+.mobile-nav-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.mobile-nav-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav-body {
+  padding: 1.5rem max(var(--page-gutter), env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(var(--page-gutter), env(safe-area-inset-left));
+}
+
+.hero-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
+}
+
+.hero-portrait {
+  width: 8rem;
+  height: 10rem;
+}
+
+.hero-title {
+  font-size: clamp(1.75rem, 8cqi, 3rem);
+}
+
+.hero-kicker,
+.page-kicker {
+  line-height: 1.7;
+}
+
+.hero-name-accent {
+  max-width: 100%;
+}
+
+.section-heading .motion-link a {
+  min-height: 2.75rem;
+}
+
+.section-heading svg {
+  flex-shrink: 0;
+}
+
+/* Keep hover surfaces inside the page gutter, including when text is enlarged. */
+.content-row {
+  margin-inline: -8px;
+  padding-inline: 8px;
+}
+
+@container content (min-width: 32rem) {
+  .content-row {
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+}
+
+.certification-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 1rem 2rem;
+}
+
+.prose {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+@container content (min-width: 32rem) {
+  .hero-portrait {
+    width: 11rem;
+    height: 14rem;
+  }
+}
+
+@container content (min-width: 42rem) {
+  .hero-layout {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
+
+@container content (min-width: 44rem) {
+  .editor-content-grid {
+    grid-template-columns: minmax(12rem, 0.7fr) minmax(0, 1.5fr);
+    align-items: start;
+  }
+}
+
+@container content (min-width: 48rem) {
+  .hero-portrait {
+    width: 13rem;
+    height: 16rem;
+  }
+}
+
+@container content (max-width: 24rem) {
+  .section-heading h2 {
+    font-size: clamp(1rem, 4.5cqi, 1.25rem);
+  }
+
+  .section-heading > div:first-child {
+    flex-basis: 100%;
+  }
+}
+
+@media (pointer: coarse) {
+  :where(button, .instagram-qr-profile) {
+    min-height: 2.75rem;
+  }
+
+  :where(input, textarea, select):not([type="file"]) {
+    font-size: max(1rem, 16px);
   }
 }
 
@@ -351,7 +510,7 @@ a.certification-item:hover svg {
 
 .gear-showcase-featured {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(12rem, 0.55fr);
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.55fr);
   align-items: center;
   gap: clamp(1rem, 4vw, 3rem);
   margin-bottom: clamp(2rem, 5vw, 4rem);
@@ -360,11 +519,11 @@ a.certification-item:hover svg {
 .gear-stage {
   position: relative;
   min-width: 0;
-  height: clamp(15rem, 28vw, 21rem);
+  height: clamp(15rem, 38cqi, 21rem);
 }
 
 .gear-showcase-featured .gear-stage {
-  height: clamp(20rem, 38vw, 29rem);
+  height: clamp(17rem, 55cqi, 29rem);
 }
 
 .gear-stage::after {
@@ -472,14 +631,16 @@ a.certification-item:hover svg {
 
 .gear-view-switch {
   display: flex;
-  gap: 0.9rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .gear-view-toolbar button {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.6rem;
-  padding-block: 0.45rem;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.25rem;
   cursor: pointer;
   transition: color 180ms ease;
 }
@@ -583,7 +744,8 @@ a.certification-item:hover svg {
 }
 
 .gear-model-control {
-  padding: 0.35rem 0;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.25rem;
   background: transparent;
   color: var(--muted);
   font-family: var(--font-mono);
@@ -624,13 +786,13 @@ a.certification-item:hover svg {
   line-height: 1.7;
 }
 
-@media (max-width: 700px) {
+@container content (max-width: 40rem) {
   .gear-showcase-featured {
     display: block;
   }
 
   .gear-showcase-featured .gear-stage {
-    height: 21rem;
+    height: clamp(17rem, 65cqi, 21rem);
   }
 
   .gear-section-heading {
@@ -638,7 +800,7 @@ a.certification-item:hover svg {
   }
 }
 
-@media (max-width: 560px) {
+@container content (max-width: 30rem) {
   .gear-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
@@ -651,6 +813,18 @@ a.certification-item:hover svg {
   .gear-section-heading p {
     max-width: 8.5rem;
     font-size: 0.7rem;
+  }
+}
+
+@container content (max-width: 24rem) {
+  .gear-section-heading {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .gear-section-heading p {
+    max-width: none;
+    text-align: left;
   }
 }
 
@@ -700,8 +874,8 @@ a.certification-item:hover svg {
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -723,7 +897,8 @@ a.certification-item:hover svg {
   inset: 0;
   width: min(calc(100% - 2rem), 32rem);
   max-width: none;
-  max-height: min(90vh, 48rem);
+  max-height: min(calc(100dvh - 2rem), 48rem);
+  overscroll-behavior: contain;
   overflow: auto;
   margin: auto;
   padding: 1.25rem;
@@ -749,15 +924,15 @@ a.certification-item:hover svg {
 }
 
 .instagram-qr-close {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 .instagram-qr-image {
   display: block;
   width: 100%;
   height: auto;
-  max-height: min(58vh, 32rem);
+  max-height: min(58dvh, 32rem);
   border: 1px solid var(--border);
   border-radius: 0.9rem;
   object-fit: contain;

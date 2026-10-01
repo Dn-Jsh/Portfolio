@@ -28,7 +28,7 @@ export default async function ProjectsPage() {
               href={project.link}
               target={project.link.startsWith("http") ? "_blank" : undefined}
               rel={project.link.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="project-row group block py-6 border-b border-border first:border-t hover:bg-card/50 -mx-4 px-4 rounded-lg"
+              className="project-row group block py-6 border-b border-border first:border-t hover:bg-card/50 content-row rounded-lg"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex items-center gap-3">

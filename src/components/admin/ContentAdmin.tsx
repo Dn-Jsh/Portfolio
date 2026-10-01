@@ -242,19 +242,19 @@ export function ContentAdmin({ initialDrafts, initialPublished }: { initialDraft
         </button>
       </header>
 
-      <div className="grid gap-6 xl:grid-cols-[210px_minmax(0,1fr)]">
-        <nav aria-label="Content types" className="flex gap-2 overflow-x-auto pb-1 xl:block xl:space-y-1">
+      <div className="grid min-w-0 gap-6">
+        <nav aria-label="Content types" className="flex min-w-0 gap-2 overflow-x-auto pb-1">
           {EDITOR_SECTIONS.map((option) => (
-            <button key={option.type} type="button" onClick={() => chooseType(option.type)} className={`block shrink-0 rounded-lg px-3 py-2 text-left text-sm transition-colors xl:w-full ${option.type === type ? "bg-fg/10 font-semibold text-fg" : "text-muted hover:bg-card hover:text-fg"}`}>
+            <button key={option.type} type="button" onClick={() => chooseType(option.type)} className={`block shrink-0 rounded-lg px-3 py-2 text-left text-sm transition-colors ${option.type === type ? "bg-fg/10 font-semibold text-fg" : "text-muted hover:bg-card hover:text-fg"}`}>
               {option.label}
               <span className="ml-2 font-mono text-[10px] opacity-60">{drafts.filter((row) => row.content_type === option.type).length}</span>
             </button>
           ))}
         </nav>
 
-        <div className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(220px,0.75fr)_minmax(0,1.5fr)]">
+        <div className="editor-content-grid grid min-w-0 gap-6">
           <section className="rounded-xl border border-border bg-card/40 p-4">
-            <div className="mb-4 flex items-center justify-between gap-2">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
               <h2 className="font-semibold">{section.label}</h2>
               <button type="button" onClick={newItem} className="inline-flex items-center gap-1 rounded-md border border-border px-2 py-1.5 text-xs font-mono hover:text-fg">
                 <Plus size={13} /> Add
@@ -351,7 +351,7 @@ function EditorFieldControl({ field, value, onChange }: { field: EditorField; va
     return (
       <div className="space-y-3">
         {label}
-        {stats.map((stat, index) => <div key={index} className="grid gap-2 sm:grid-cols-[1fr_2fr_auto]">
+        {stats.map((stat, index) => <div key={index} className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_auto]">
           <input aria-label={`Highlight ${index + 1} value`} value={stat.value ?? ""} onChange={(event) => onChange(stats.map((item, itemIndex) => itemIndex === index ? { ...item, value: event.target.value } : item))} placeholder="Value" className={base} />
           <input aria-label={`Highlight ${index + 1} label`} value={stat.label ?? ""} onChange={(event) => onChange(stats.map((item, itemIndex) => itemIndex === index ? { ...item, label: event.target.value } : item))} placeholder="Label" className={base} />
           <button type="button" onClick={() => onChange(stats.filter((_, itemIndex) => itemIndex !== index))} className="rounded-md border border-border px-2 text-xs text-muted hover:text-red-600">Remove</button>
@@ -401,7 +401,7 @@ function ImageField({ field, value, onChange }: { field: EditorField; value: str
   return <div className="space-y-2">
     <span className="text-sm font-medium">{field.label}{field.required && <span aria-hidden="true" className="ml-1 text-red-500">*</span>}</span>
     <div className="flex flex-wrap items-center gap-2">
-      <input type="text" value={value} onChange={(event) => onChange(event.target.value)} placeholder="Paste an image URL or upload a file" className="min-w-56 flex-1 rounded-lg border border-border bg-bg px-3 py-2.5 text-sm outline-none focus:border-fg/50" />
+      <input type="text" aria-label={`${field.label} URL`} value={value} onChange={(event) => onChange(event.target.value)} placeholder="Paste an image URL or upload a file" className="min-w-0 basis-full flex-1 rounded-lg border border-border bg-bg px-3 py-2.5 text-sm outline-none focus:border-fg/50 sm:basis-56" />
       <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2.5 text-sm text-muted hover:text-fg">
         <ImagePlus size={15} /> {busy ? "Uploading…" : "Upload image"}
         <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" disabled={busy} onChange={(event) => void upload(event)} className="sr-only" />

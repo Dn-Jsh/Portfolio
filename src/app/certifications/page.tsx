@@ -36,7 +36,7 @@ export default async function CertificationsPage() {
               <h2 className="text-[12px] font-mono uppercase tracking-widest text-muted mb-6">
                 {category}
               </h2>
-              <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="certification-grid">
                 {certs.map((cert) => (
                   <CertificationItem key={cert.title} cert={cert} />
                 ))}

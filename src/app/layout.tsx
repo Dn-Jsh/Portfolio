@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Silkscreen } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -29,6 +29,12 @@ export const metadata: Metadata = {
   description: HOME_DESCRIPTION,
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,8 +54,8 @@ export default function RootLayout({
         >
           <Sidebar />
           <MobileNav />
-          <div className="md:pl-56 min-h-screen flex justify-center">
-            <main className="w-full max-w-4xl px-6 py-12 md:px-12 md:py-20 lg:px-16">
+          <div className="lg:pl-56 min-h-dvh flex min-w-0 justify-center">
+            <main id="main-content" className="site-content w-full min-w-0 max-w-4xl">
               {children}
             </main>
           </div>

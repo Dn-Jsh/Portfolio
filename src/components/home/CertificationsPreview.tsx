@@ -25,7 +25,7 @@ export async function CertificationsPreview() {
         />
       </ScrollReveal>
 
-      <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
+      <div className="certification-grid">
         {certifications.slice(0, 3).map(({ data: cert, id }, i) => (
           <ScrollReveal key={id} delay={i * 0.06}>
             <CertificationItem cert={cert} />

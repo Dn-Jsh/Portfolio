@@ -29,7 +29,7 @@ export async function ProjectsPreview() {
           <ScrollReveal key={id} delay={i * 0.06}>
             <a
               href={project.link}
-              className="project-row group flex items-center justify-between gap-4 py-4 border-b border-border hover:bg-card/50 -mx-4 px-4 rounded-lg"
+              className="project-row group flex items-center justify-between gap-4 py-4 border-b border-border hover:bg-card/50 content-row rounded-lg"
             >
               <div className="min-w-0">
                 <h3 className="font-semibold text-[15px] group-hover:text-muted transition-colors">

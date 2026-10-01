@@ -25,7 +25,7 @@ export function Highlights() {
             <ScrollReveal key={project.id} delay={i * 0.08}>
               <a
                 href={project.link}
-                className="group flex items-start gap-4 py-5 border-b border-border hover:bg-card/50 -mx-4 px-4 rounded-lg transition-colors"
+                className="group flex items-start gap-4 py-5 border-b border-border hover:bg-card/50 content-row rounded-lg transition-colors"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">

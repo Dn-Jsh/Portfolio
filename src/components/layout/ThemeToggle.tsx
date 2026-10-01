@@ -14,14 +14,14 @@ export function ThemeToggle() {
   useEffect(() => { setMounted(true) }, []);
 
   if (!mounted) {
-    return <div className="w-8 h-8" />; // Placeholder
+    return <div className="w-11 h-11" />; // Placeholder
   }
 
   return (
     <button
       type="button"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="theme-toggle inline-flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted"
+      className="theme-toggle inline-flex h-11 w-11 items-center justify-center rounded-md border border-transparent text-muted"
       aria-label="Toggle theme"
     >
       <AnimatePresence mode="wait" initial={false}>

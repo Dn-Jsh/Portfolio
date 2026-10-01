@@ -16,6 +16,12 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Responsive layout verification
+
+With the development server running, run `npm run verify:responsive` using a local Playwright installation. When using bundled browser tools, set `PLAYWRIGHT_MODULE_PATH` to the Playwright package directory and `PLAYWRIGHT_EXECUTABLE_PATH` to the Chromium executable. Set `RESPONSIVE_BASE_URL` to check a different local server.
+
+The check covers 18 widths from 280px to 2560px, discovers published blog pages, checks horizontal overflow and overlapping section headings, and exercises touch menus, portrait/landscape dialogs, focus restoration, desktop breakpoint changes, and enlarged text. Screenshots are saved under `.next/responsive/`. Editor login and setup pages are included; authenticated editor content requires a separate signed-in check.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

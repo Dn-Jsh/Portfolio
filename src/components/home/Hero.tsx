@@ -49,14 +49,14 @@ export async function Hero() {
       </div>
 
       <div>
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-          <div className="hero-image-frame w-32 h-40 sm:w-44 sm:h-56 md:w-52 md:h-64 rounded-xl shrink-0 relative">
+        <div className="hero-layout">
+          <div className="hero-image-frame hero-portrait rounded-xl shrink-0 relative">
             <div className="relative h-full w-full overflow-hidden rounded-[inherit] bg-bg">
               <Image
                 src={settings.profileImage || "/profile-nobg.png"}
                 alt={`${settings.firstName} ${settings.lastName}`}
                 fill
-                sizes="(max-width: 640px) 128px, (max-width: 768px) 176px, 208px"
+                sizes="(max-width: 639px) 128px, (max-width: 1279px) 176px, 208px"
                 fetchPriority="high"
                 unoptimized
                 className="hero-photo w-full h-full object-cover object-[50%_95%] scale-[1.6] grayscale contrast-[1.2] brightness-90 hover:grayscale-0 hover:contrast-100"
@@ -68,8 +68,8 @@ export async function Hero() {
           </div>
 
           {/* Name + Bio */}
-          <div className="flex-1">
-            <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-2 leading-tight">
+          <div className="min-w-0 flex-1">
+            <h1 className="hero-title font-display font-bold tracking-tight mb-2 leading-tight">
               {settings.firstName} <span className="hero-name-accent">{settings.lastName}</span>
             </h1>
 
@@ -93,7 +93,7 @@ export async function Hero() {
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hero-social-link text-muted flex items-center gap-1"
+                  className="hero-social-link min-h-11 text-muted flex items-center gap-1"
                 >
                   {social.platform.toLowerCase()}
                   <ArrowUpRight size={13} className="opacity-60" aria-hidden="true" />

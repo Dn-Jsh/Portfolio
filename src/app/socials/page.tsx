@@ -69,12 +69,12 @@ export default async function SocialsPage() {
       <div className="flex flex-col">
         {socialRows.map(({ data: social, id }, i) => (
           <ScrollReveal key={id} delay={i * 0.06}>
-            <div className="social-row flex items-center gap-3 border-b border-border -mx-4 px-4 rounded-lg">
+            <div className="social-row flex items-center gap-3 border-b border-border content-row rounded-lg">
               <a
                 href={social.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-profile group flex min-w-0 flex-1 items-center gap-5 py-5"
+                className="social-profile group flex min-w-0 flex-1 items-center gap-2 py-5 sm:gap-5"
               >
                 <div className="w-10 h-10 flex items-center justify-center text-muted group-hover:text-fg transition-colors shrink-0">
                   <SocialPlatformIcon icon={social.icon} />
