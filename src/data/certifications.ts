@@ -7,13 +7,6 @@ export const CERTIFICATIONS = [
     link: "#",
   },
   {
-    title: "AWS Certified Cloud Practitioner",
-    provider: "Amazon Web Services",
-    category: "CLOUD",
-    date: "2025",
-    link: "#",
-  },
-  {
     title: "Installing and Configuring Computer Systems",
     provider: "TESDA Online Program",
     category: "TECHNICAL",
@@ -46,34 +39,6 @@ export const CERTIFICATIONS = [
     provider: "TESDA Online Program",
     category: "TECHNICAL",
     date: "October 12, 2024",
-    link: "#",
-  },
-  {
-    title: "Meta Front-End Developer",
-    provider: "Meta · Coursera",
-    category: "ENGINEERING",
-    date: "2024",
-    link: "#",
-  },
-  {
-    title: "React Native Specialization",
-    provider: "Meta · Coursera",
-    category: "MOBILE",
-    date: "2024",
-    link: "#",
-  },
-  {
-    title: "JavaScript Algorithms & Data Structures",
-    provider: "freeCodeCamp",
-    category: "ENGINEERING",
-    date: "2023",
-    link: "#",
-  },
-  {
-    title: "Responsive Web Design",
-    provider: "freeCodeCamp",
-    category: "ENGINEERING",
-    date: "2023",
     link: "#",
   },
 ];
