@@ -6,6 +6,71 @@
 | CERT-001 | Remove the five demo AWS, Meta, and freeCodeCamp certifications | Codex | Blocked |
 | REC-001 | Remove the three demo recommendations | Codex | Blocked |
 | NAV-001 | Center the pink sidebar marker beside the active label | Codex | Done |
+| RESP-001 | Adapt all website layouts and controls to Android and iPhone screen sizes | Codex; Laura review | Done |
+| GH-001 | Display Dn-Jsh's real GitHub contributions instead of generated activity | Codex; Laura review | Done |
+
+## GH-001 acceptance and scope
+
+Replace the generated contribution cells with the public contribution calendar for the existing `Dn-Jsh` GitHub account. Display the real daily activity and yearly count, preserve chronological calendar layout and phone responsiveness, refresh cached data automatically, and show a clear unavailable state if GitHub cannot be read. Read only public GitHub data; require no browser-side secrets, new dependencies, account changes, or publishing. Codex owns implementation and ticket status. Laura independently reviews the candidate. Required checks: meaningful parser/fetch tests, TypeScript, scoped lint, production build, live-data comparison, responsive browser verification, independent review, and final diff review. Prior responsive edits remain in the working tree and must be preserved.
+
+Review checkpoint: Laura independently passed all nine GitHub tests, four SEO tests, and scoped whitespace checks. No parsing, caching, chronology, or security regression was found. One P2 accessibility finding remains: nonfocusable daily-cell title tooltips do not expose dated counts to keyboard, touch, or screen-reader users. Add a native collapsible dated-count table and rendering coverage, then re-review the changed surface. The initial production build, TypeScript, and scoped lint passed. The real loader matched GitHub's public total of 12 across 368 days, including two contributions on 2026-10-07.
+
+Follow-up review: the accessibility finding is resolved by a native disclosure and semantic date/count table, with newest dates first and a named, keyboard-scrollable region. Laura independently passed the nine GitHub tests and scoped whitespace check again and reported no remaining source findings. Reviewed component SHA256: `9A64CB3F503410CB807B63425DBCF02091AE371F01D8A38CE275902D2913E4B0`. Updated production build and live browser acceptance remain pending coordinator verification.
+
+### GH-001 completion evidence
+
+Connected the existing `Dn-Jsh` profile to GitHub's public contribution calendar through a server-side fetch cached for one hour, with a five-second timeout. The parser validates dates, counts, intensity levels, and complete consecutive calendar days. Only typed values render into the page; upstream HTML is never injected. Failure displays a clear unavailable state and a profile link. The calendar follows UTC weekdays, shows recent activity first on small screens through contained horizontal scrolling, and includes an accessible native disclosure with every dated count. No credentials, dependencies, account settings, or external resources were changed.
+
+Validation passed:
+
+- `npm run test:github`: all nine parser, fetch, failure-state, and rendered-component tests passed; Laura independently repeated them.
+- `npm run test:seo`: all four existing tests passed.
+- `npx tsc --noEmit`, scoped ESLint for affected source/tests and the browser verification script, and `git diff --check`: passed.
+- `npm run build`: optimized production compilation, TypeScript, and page generation succeeded for the final component candidate.
+- Live production verification matched all 368 rendered dates, daily counts, intensity levels, and the yearly total against [GitHub's public calendar](https://github.com/users/Dn-Jsh/contributions). On 2026-10-07 it showed 12 contributions across five active dates, including two on that date. The actual Next.js fetch cache recorded `revalidate: 3600` for the fixed public calendar URL.
+- Dedicated browser checks passed at 280, 320, 390, 412, 844 landscape, and 1440 CSS pixels, including recent activity visibility, contained scrolling, keyboard and touch disclosure, all daily table rows, dark mode, and visible animation cells. No page errors or document overflow occurred.
+- `npm run verify:responsive`: all 380 production checks passed across the existing 13 routes, 22 widths from 280 to 2560, Android/iPhone Chromium profiles, portrait/landscape, enlarged text, navigation, and QR dialogs.
+
+The first full regression run exposed a transient resize measurement in the test harness: the new viewport dimensions arrived before the main container geometry updated. The helper now waits for the requested viewport and three identical geometry frames, bounded at one second. It still reports persistent overflow. Laura independently reviewed this final verification-script change, passed syntax/whitespace checks, and reported no findings. Reviewed script SHA256: `7525296D8510F2A779791EB40B2DF4CFD83E799A5A19F0CB0AAEDEB47924473D`.
+
+Ignored local evidence: `.next/github-verification.log`, `.next/responsive-verification.log`, `.next/github-phone.png`, and `.next/github-counts-phone.png`. The calendar screenshots were visually reviewed. A persistent preview image is saved at `C:/Users/danje/.codex/visualizations/2026/10/07/01a11499-d8cf-7ef3-a300-89cc52ac3ab9/github-contributions.png`. The production preview remains served locally at `http://127.0.0.1:3000`.
+
+Engineering Gates and Completion Mandate: intake/ownership gates 01–12, skills gate 14, code/style gates 15–18, rendering gate 20, external-input/error gates 21–22, and verification/review gates 30–37 passed through the evidence above. Parallel implementation gate 13, route/bundle gate 19, database gates 23–29, and gold-lane requirements are N/A for this standard-lane server-rendered integration. Dependencies are unchanged. Independent QA review and final diff review have no unresolved findings.
+
+Limits: the public calendar's markup can change; validation then displays the unavailable state. Browser checks use Chromium emulation, not Safari/WebKit or physical devices. Changes are complete locally and have not been published. Current completion: 3/6 tickets. No GitHub or responsive work remains. The next backlog action is application and live verification of the three CMS migrations, blocked by the existing database permission denial.
+
+## RESP-001 acceptance and scope
+
+Acceptance criteria: keep every public page readable without page-level horizontal overflow at 280–2560 CSS pixels; support phone portrait and landscape orientations; keep mobile navigation and dialogs within the usable viewport; preserve zoom, keyboard access, safe-area padding, desktop layout, and existing content. Verify common Android and iPhone sizes, touch controls, enlarged text, and affected pages with the existing responsive browser check. Record browser-engine limitations explicitly.
+
+Codex owns implementation, the responsive verification script, and ticket status. Laura owns independent read-only review. This is a standard-lane layout fix with no database, credential, dependency, or publishing changes. Existing blocked CMS tickets are not dependencies. Use the current installed Next.js documentation, existing styles, and native CSS before new logic. Required checks: production build, typecheck, lint, existing tests, responsive browser verification, independent review, and final diff review.
+
+Review checkpoint: Laura independently reviewed the working diff against `c1580c8` and found no source regression. `node --check scripts/verify-responsive.mjs` and `git diff --check` passed independently. Required review skills and the installed Next.js CSS/viewport documentation were loaded. The reviewer identified two verification limits: root-font enlargement misses fixed-pixel text, and phone-context landscape checks cover only the last route. The coordinator will strengthen those checks before closure. Browser verification and production build remain pending; no WebKit or real-device validation is claimed.
+
+Follow-up review: both coverage gaps were addressed. The test now snapshots and doubles computed fonts in the main content, including fixed-pixel text, and checks both orientations for every selected phone route. Laura independently reviewed script SHA256 `565517AE79C7C0B1E078824CE349233A274D519174AF918DBA5CAFF28190E302` and reported no findings. JavaScript syntax and scoped whitespace checks passed again. Text enlargement covers main content, while menu focus, scrolling, viewport fit, and dialog touch targets are checked separately. Phone profiles still run in Chromium; WebKit and physical devices are not tested.
+
+### RESP-001 completion evidence
+
+Implemented fluid homepage section spacing and page headings, content-sized profile highlight columns, full-height mobile-menu fallback, QR dialog safe-area gutters, and 44px touch-button minimum widths. The QR close button no longer shrinks. Reduced-motion users can see the contribution cells; their paused animation previously left them transparent. Existing responsive containers, content, desktop navigation, keyboard semantics, and browser zoom support are preserved. No dependencies, database records, credentials, or external services were changed.
+
+Validation passed:
+
+- `npm run build`: optimized production compilation, TypeScript, and page generation succeeded.
+- `npx tsc --noEmit`: passed before and after the production build.
+- `npx eslint src scripts tests next.config.ts proxy.ts eslint.config.mjs postcss.config.mjs`: passed. `npm run lint` was stopped because its unbounded scan included generated JavaScript in the local Python `venv`; the explicit application-source check is the meaningful alternative.
+- `npm run test:seo`: all four existing tests passed.
+- `node --check scripts/verify-responsive.mjs` and `git diff --check`: passed; Git reported only line-ending conversion notices.
+- `npm run verify:responsive`: 380 checks passed against both the development preview and the completed production build. The script used the desktop-bundled Playwright module and installed headless Chromium via `PLAYWRIGHT_MODULE_PATH` and `PLAYWRIGHT_EXECUTABLE_PATH`.
+
+Responsive coverage includes 13 public/authentication routes at 22 widths from 280 through 2560 CSS pixels, two general landscape sizes, and doubled main-content text including fixed-pixel fonts. iPhone SE, iPhone 13, iPhone 14 Pro Max, Pixel 7, and Galaxy S9+ profiles each covered the homepage, certifications, gear, socials, and sign-in page in portrait and landscape, plus the dark homepage. Mobile-navigation checks verified viewport fit, scroll locking/restoration, focus containment/restoration, footer reachability, link navigation, and desktop-breakpoint closure. QR checks verified portrait/landscape fit, 44px close controls, simulated safe-area margins, scrollable footer reachability, and focus restoration. The initial QR failure was a verification race after resizing; waiting for browser reflow resolved it.
+
+Visually reviewed the production homepage at 390px and 1440px and the gear page at 390px. Ignored local evidence is in `.next/responsive/` and `.next/responsive-verification.log`; a subsequent Next.js build may clear it. The production preview is served locally at `http://127.0.0.1:3000`. Laura completed independent source and verification-script reviews with no remaining findings.
+
+Engineering Gates and Completion Mandate: gates 01–12 passed through scoped intake, acceptance criteria, ownership, repository/installed Next.js inspection, data-flow review, and planned checks. Gates 14–18 and 20 passed for the changed CSS/TSX, naming, reuse, types, and unchanged server/client rendering contracts. Gates 30–37 passed through the production build, typecheck, lint, existing tests, responsive end-to-end checks, unchanged dependency/security boundaries, affected accessibility checks, independent review, and final diff review. Gates 13 and 19 are N/A: implementation was serial and no route/bundle boundary changed. Gates 21–29 are N/A: no application input, error-handling, schema, migration, or RLS changes. Gold lane is N/A for this standard-lane layout ticket. The engineering-gates installation contained no global checks script, so the project commands above were run explicitly.
+
+Limits: device profiles use Chromium, not Safari/WebKit or physical phones; simulated safe-area gutters do not prove real-device notch behavior. The authenticated content-editor screen was not exercised. Existing reduced-motion hydration warnings in `Sidebar`/`ScrollReveal` were present in the baseline and remain outside this CSS/layout change; affected content is visible and the responsive checks pass. Changes are complete locally and have not been published.
+
+Current completion: 2/5 tickets. RESP-001 and NAV-001 are complete locally. No responsive work remains. The next backlog action is authorized application and live verification of the three previously blocked CMS migrations.
 
 ## EXP-001 evidence
 
@@ -58,3 +123,5 @@ Browser limitation: reduced-motion reload emitted an existing hydration warning 
 ## Git delivery
 
 The user authorized pushing these changes to the current `main` branch. The final content diff and three migration files were reviewed before staging. `npm audit --omit=dev` ran before committing and reported three existing dependency vulnerabilities (two moderate and one high), affecting `postcss-selector-parser`, `@tailwindcss/typography`, and `source-map-js`. This content-only update changes no dependencies; dependency remediation is outside its scope. CMS application and live acceptance remain pending regardless of Git delivery.
+
+2026-10-07 follow-up delivery candidate: the user authorized committing and pushing the completed RESP-001 and GH-001 changes to `origin/main` (`Dn-Jsh/Portfolio`). The final application/test diff was reviewed. All nine GitHub tests and four SEO tests passed again, as did the whitespace check. The previously completed production build, typecheck, scoped lint, independent Laura review, live-calendar comparison, and 380 responsive checks still apply to the unchanged application candidate. The required pre-commit `npm audit --omit=dev` again reported the same three existing vulnerabilities (two moderate and one high); dependency versions and the lockfile are unchanged. Only the reviewed responsive/GitHub source, tests, verification script, package test command, and ticket evidence are included. Remote delivery confirmation is reported after the push.

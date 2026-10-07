@@ -107,7 +107,7 @@ export async function Hero() {
 
       {/* Profile highlights */}
       <ScrollReveal delay={0.16} direction="scale">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-4 mt-12 pt-8 border-t border-border">
+        <div className="hero-stats border-t border-border">
           {settings.stats.map((stat, index) => (
             <div key={`${stat.label}-${index}`} className="hero-stat">
               <div className="hero-stat-value text-2xl md:text-3xl font-bold tracking-tight">{stat.value}</div>

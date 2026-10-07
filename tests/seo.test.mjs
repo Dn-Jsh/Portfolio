@@ -1,28 +1,6 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { createRequire } from "node:module";
 import test from "node:test";
-import vm from "node:vm";
-import ts from "typescript";
-
-const require = createRequire(import.meta.url);
-
-// Exercise the real TypeScript modules without adding a test framework or resolving Next's aliases.
-function loadModule(pathname, imports = {}) {
-  const filename = new URL(pathname, import.meta.url);
-  const { outputText } = ts.transpileModule(readFileSync(filename, "utf8"), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
-    fileName: filename.pathname,
-  });
-  const testModule = { exports: {} };
-  vm.runInNewContext(outputText, {
-    module: testModule,
-    exports: testModule.exports,
-    URL,
-    require: (name) => imports[name] ?? require(name),
-  }, { filename: filename.pathname });
-  return testModule.exports;
-}
+import { loadModule } from "./load-typescript.mjs";
 
 const seo = loadModule("../src/lib/seo.ts");
 

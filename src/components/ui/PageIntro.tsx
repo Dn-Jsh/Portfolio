@@ -14,7 +14,7 @@ export function PageIntro({ title, description }: PageIntroProps) {
           <span aria-hidden="true" className="page-kicker-mark" />
           Dan Jeshua / {title}
         </span>
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">{title}</h1>
+        <h1 className="page-title font-bold mb-3">{title}</h1>
         <p className="text-muted max-w-xl">{description}</p>
       </header>
     </ScrollReveal>

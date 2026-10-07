@@ -13,7 +13,7 @@ export const metadata = getPublicPageMetadata("/");
 
 export default function Home() {
   return (
-    <div>
+    <div className="home-sections">
       <AuthEmailLanding />
       <Hero />
       <RecentPosts />

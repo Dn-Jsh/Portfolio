@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:seo": "node --test tests/seo.test.mjs",
+    "test:github": "node --test tests/github-contributions.test.mjs",
     "verify:seo": "node scripts/verify-seo.mjs",
     "verify:responsive": "node scripts/verify-responsive.mjs"
   },

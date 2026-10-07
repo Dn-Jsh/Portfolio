@@ -142,6 +142,7 @@ body::-webkit-scrollbar {
   inset: 0;
   width: 100%;
   max-width: none;
+  height: 100vh;
   height: 100dvh;
   max-height: none;
   margin: 0;
@@ -176,6 +177,27 @@ body::-webkit-scrollbar {
 
 .hero-title {
   font-size: clamp(1.75rem, 8cqi, 3rem);
+}
+
+.page-title {
+  font-size: clamp(1.5rem, 6cqi, 2.25rem);
+  line-height: 1.25;
+}
+
+.home-sections > section:not(:last-child) {
+  margin-bottom: clamp(3rem, 10cqi, 6rem);
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
+  gap: 1rem;
+  margin-top: clamp(2rem, 6cqi, 3rem);
+  padding-top: clamp(1.5rem, 4cqi, 2rem);
+}
+
+.hero-stat {
+  min-width: 0;
 }
 
 .hero-kicker,
@@ -266,6 +288,10 @@ body::-webkit-scrollbar {
 @media (pointer: coarse) {
   :where(button, .instagram-qr-profile) {
     min-height: 2.75rem;
+  }
+
+  :where(button) {
+    min-width: 2.75rem;
   }
 
   :where(input, textarea, select):not([type="file"]) {
@@ -892,15 +918,19 @@ a.certification-item:hover svg {
 }
 
 .instagram-qr-dialog {
+  --dialog-inline-space: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
+  --dialog-block-space: max(1rem, env(safe-area-inset-top), env(safe-area-inset-bottom));
   position: fixed;
   inset: 0;
-  width: min(calc(100% - 2rem), 32rem);
+  width: min(calc(100% - 2 * var(--dialog-inline-space)), 32rem);
   max-width: none;
-  max-height: min(calc(100dvh - 2rem), 48rem);
+  max-height: min(calc(100vh - 2 * var(--dialog-block-space)), 48rem);
+  max-height: min(calc(100dvh - 2 * var(--dialog-block-space)), 48rem);
   overscroll-behavior: contain;
   overflow: auto;
+  overflow-wrap: anywhere;
   margin: auto;
-  padding: 1.25rem;
+  padding: clamp(0.875rem, 4vw, 1.25rem);
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   background: var(--bg);
@@ -925,6 +955,7 @@ a.certification-item:hover svg {
 .instagram-qr-close {
   width: 2.75rem;
   height: 2.75rem;
+  flex-shrink: 0;
 }
 
 .instagram-qr-image {
@@ -982,6 +1013,52 @@ a.certification-item:hover svg {
   background: var(--accent);
   box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
 }
+
+.contribution-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-block: 0.25rem;
+}
+
+.contribution-calendar {
+  display: grid;
+  grid-template-columns: repeat(var(--contribution-weeks), 10px);
+  grid-template-rows: 1rem repeat(7, 10px);
+  gap: 3px;
+  width: max-content;
+  padding: 4px;
+}
+
+.contribution-month {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.contribution-legend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.contribution-dot,
+.contribution-legend-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background-color: var(--border);
+}
+
+:is(.contribution-dot, .contribution-legend-cell)[data-level="1"] { background-color: #9be9a8; }
+:is(.contribution-dot, .contribution-legend-cell)[data-level="2"] { background-color: #40c463; }
+:is(.contribution-dot, .contribution-legend-cell)[data-level="3"] { background-color: #30a14e; }
+:is(.contribution-dot, .contribution-legend-cell)[data-level="4"] { background-color: #216e39; }
+.dark :is(.contribution-dot, .contribution-legend-cell)[data-level="1"] { background-color: #0e4429; }
+.dark :is(.contribution-dot, .contribution-legend-cell)[data-level="2"] { background-color: #006d32; }
+.dark :is(.contribution-dot, .contribution-legend-cell)[data-level="3"] { background-color: #26a641; }
+.dark :is(.contribution-dot, .contribution-legend-cell)[data-level="4"] { background-color: #39d353; }
 
 .contribution-dot {
   animation: cell-pop 460ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -1066,6 +1143,10 @@ a.certification-item:hover svg {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .contribution-dot {
+    animation: none;
+  }
+
   .gear-photo-tilt {
     transform: none;
   }
