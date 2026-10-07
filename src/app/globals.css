@@ -972,13 +972,14 @@ a.certification-item:hover svg {
 
 .nav-active-indicator {
   position: absolute;
-  top: 50%;
+  top: 0;
+  bottom: 0;
+  margin-block: auto;
   left: -0.75rem;
   width: 2px;
   height: 1.1rem;
   border-radius: 999px;
   background: var(--accent);
-  transform: translateY(-50%);
   box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
 }
 

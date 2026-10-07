@@ -5,6 +5,7 @@
 | EXP-001 | Replace the two placeholder roles with Domain Seller at Domain Nerds, 2019–2020 | Codex | Blocked |
 | CERT-001 | Remove the five demo AWS, Meta, and freeCodeCamp certifications | Codex | Blocked |
 | REC-001 | Remove the three demo recommendations | Codex | Blocked |
+| NAV-001 | Center the pink sidebar marker beside the active label | Codex | Done |
 
 ## EXP-001 evidence
 
@@ -39,6 +40,20 @@ Validation: `npx tsc --noEmit`, `npx eslint src/data/recommendations.ts`, and `g
 Relevant engineering gates passed for local intake, ownership, data flow, scope, conventions, types, migration compatibility, recovery, security, and verification. A full build, new persisted tests, independent specialist review, and browser testing are N/A for this content removal. Layout, accessibility, schema, RLS, and dependencies are unchanged. The existing Supabase permission denial prevents applying and testing the migration; live removal remains unverified.
 
 Completed: 0/3 tickets. All local edits are ready. Next task: apply and verify the three CMS migrations with authorized access.
+
+## NAV-001 evidence
+
+Acceptance criteria: center the pink line beside the active sidebar label on initial load and after navigation; preserve its existing appearance and animation; support reduced motion.
+
+Changed only `.nav-active-indicator` in `src/app/globals.css`: use zero top and bottom insets with automatic block margins instead of a centering transform. Framer Motion's shared layout animation writes an inline transform, which previously overwrote the CSS translation after navigation. The local browser reproduced an 8.796875px downward offset with the original CSS. With the fix, Projects, Experience, Stack, Certifications, and Recommendations each aligned within 0.1px after navigation; reduced motion aligned exactly. Visually reviewed `.next/sidebar-aligned.png`.
+
+Validation: `npx tsc --noEmit`, `npx eslint src/components/layout/Sidebar.tsx`, `git diff --check`, and `node .next/verify-sidebar.cjs` passed. The temporary browser check and screenshot are ignored local evidence. Next.js development compilation successfully served the affected routes. The configured browser MCP lacked its extension, so verification used the installed headless Chromium. The sandbox prevented serving the app and accessing localhost; authorized escalated runs completed these local checks.
+
+Engineering Gates and Completion Mandate reviewed: relevant intake, ownership, scope, conventions, animation compatibility, security, accessibility, typecheck, lint, affected browser navigation, and final diff checks passed. No dependencies, semantics, focus behavior, or data boundaries changed. A full production build, new unit tests, schema gates, parallel work, and gold-lane independent review are N/A for this small CSS correction. No project brief or navigation guide was present. Ponytail was loaded from its installed skill path.
+
+Current completion: 1/4 tickets. NAV-001 is complete locally. The three prior CMS tickets remain blocked by database access; next ready task requires authorized migration access.
+
+Browser limitation: reduced-motion reload emitted an existing hydration warning for `ScrollReveal` animation styles. The active marker still aligned exactly; this unrelated component is outside NAV-001's scope.
 
 ## Git delivery
 
