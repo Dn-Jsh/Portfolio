@@ -573,7 +573,7 @@ a.certification-item:hover svg {
 
 .gear-view-surface {
   position: absolute;
-  inset: 0 0 2.6rem;
+  inset: 0;
 }
 
 .gear-model-notice,
@@ -613,12 +613,9 @@ a.certification-item:hover svg {
   background: transparent;
   border: 0;
   cursor: default;
-  --photo-x: 0deg;
-  --photo-y: 0deg;
 }
 
-.gear-photo-float,
-.gear-photo-tilt {
+.gear-photo-float {
   position: absolute;
   inset: 0;
 }
@@ -629,11 +626,6 @@ a.certification-item:hover svg {
 
 .gear-grid > :nth-child(2) .gear-photo-float {
   animation-delay: -2.5s;
-}
-
-.gear-photo-tilt {
-  transform: perspective(1100px) rotateX(var(--photo-x)) rotateY(var(--photo-y));
-  transition: transform 120ms ease-out;
 }
 
 .gear-photo img {
@@ -1145,10 +1137,6 @@ a.certification-item:hover svg {
 @media (prefers-reduced-motion: reduce) {
   .contribution-dot {
     animation: none;
-  }
-
-  .gear-photo-tilt {
-    transform: none;
   }
 
   *,

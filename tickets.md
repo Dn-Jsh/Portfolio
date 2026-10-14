@@ -8,6 +8,21 @@
 | NAV-001 | Center the pink sidebar marker beside the active label | Codex | Done |
 | RESP-001 | Adapt all website layouts and controls to Android and iPhone screen sizes | Codex; Laura review | Done |
 | GH-001 | Display Dn-Jsh's real GitHub contributions instead of generated activity | Codex; Laura review | Done |
+| GEAR-001 | Remove 3D previews and tilt from every gear item; keep product photos | Codex; Laura review | Done |
+
+## GEAR-001 acceptance and scope
+
+All gear items show their product photos without a 3D preview button, model canvas, model loading text, model notice, or pointer-driven perspective tilt. Preserve descriptions, image alternatives, responsive sizing, loading behavior, and reduced-motion support. Low risk, standard lane, no dependencies. Codex owns `src/components/gear/GearViewer.tsx`, the affected photo styles in `src/app/globals.css`, and this ticket. Existing CMS data and model tooling remain compatible; no remote changes are required.
+
+Candidate: shared viewer renders photos directly as a server component. Removed the preview switch and pointer handlers, removed tilt CSS, and reclaimed the space reserved for the removed toolbar. Required skills loaded: Caveman, Clean Code TypeScript, Ponytail (full), Code Review, Engineering Gates, Completion Mandate. Repository navigation guide and project brief are absent.
+
+Validation, 2026-10-14: `npx tsc --noEmit`, `npx eslint src/components/gear/GearViewer.tsx`, and `git diff --check` passed. Next.js development compilation served `/gear` successfully. Targeted Playwright checks passed at 390px and 1440px with reduced motion: five decoded photos with nonempty alternatives and visible bounds, no model/toolbar/loading/tilt elements, no 3D or reset buttons, no 3D main text, no model network requests, and no horizontal document overflow. Screenshots saved locally in ignored `.next/gear-photo-only-390.png` and `.next/gear-photo-only-1440.png`; desktop image visually reviewed. Bundled Playwright's expected browser revision was absent and system Chrome exited at launch; the installed headless Chromium revision 1228 completed both checks without downloads.
+
+Laura independently approved the final two-file source candidate with no blocking findings, traced all five items and the viewer callers, and reran scoped lint and whitespace checks. Final SHA256: GearViewer `CFD5667819E9D2E9BF9EA8BA72AA3FCAA553DDE8A6B4E343183D7C596256F608`; globals.css `D5E7B59D7E9EE799632CF6E0ECDC181EFCBB7727BC6F426621429DB52C1C0315`. Requested Laura launch: gpt-6.1-sol medium; effective settings and usage telemetry not exposed. No application repairs required.
+
+Engineering gates: applicable intake, scope, ownership, data flow, conventions, type safety, bundle/SSR simplification, accessibility, security, local compilation, targeted browser checks, independent review, and final diff passed. Data/schema/RLS/migration gates are N/A because no contracts or remote data changed. Isolated parallel implementation and gold-lane gates are N/A: one local implementer, standard lane, then a read-only reviewer. A production build and broader suites are N/A for this scoped presentation removal; affected route compilation, typecheck, lint, and desktop/mobile checks directly cover the change. No new tests or dependencies needed. Existing unrelated edits preserved. Current requested milestone: 1/1 complete locally; no blockers, no push or deployment performed.
+
+Git delivery candidate, 2026-10-14: the user explicitly authorized push and merge to `main`. The checkout is already on `main`; `git fetch origin` confirmed zero divergence from `origin/main`. Both reviewed source hashes still match Laura's approved candidate. Stage only the two gear source changes and this GEAR-001 record; preserve existing unrelated SEO documentation and ticket edits locally. The required pre-commit `npm audit --omit=dev` reported four vulnerabilities in existing dependencies (two moderate, two high), covering Next.js, postcss-selector-parser/@tailwindcss/typography, and source-map-js. This presentation removal changes no dependencies; remediation is outside this delivery's scope. Review the staged diff and push without force, then confirm the remote `main` commit.
 
 ## GH-001 acceptance and scope
 
