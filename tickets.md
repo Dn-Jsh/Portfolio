@@ -2,6 +2,7 @@
 
 | ID | Task | Owner | Status |
 | --- | --- | --- | --- |
+| ABOUT-001 | Add a theme-matched, animated demo About page and navigation | Codex; Laura review | Done |
 | EXP-001 | Replace the two placeholder roles with Domain Seller at Domain Nerds, 2019–2020 | Codex | Blocked |
 | CERT-001 | Remove the five demo AWS, Meta, and freeCodeCamp certifications | Codex | Blocked |
 | REC-001 | Remove the three demo recommendations | Codex | Blocked |
@@ -10,6 +11,22 @@
 | GH-001 | Display Dn-Jsh's real GitHub contributions instead of generated activity | Codex; Laura review | Done |
 | SOC-001 | Add clean scannable QR dialogs to every social and correct TikTok/Facebook/X links | Codex; Laura review | Done |
 | GEAR-001 | Remove 3D previews and tilt from every gear item; keep product photos | Codex; Laura review | Done |
+
+## ABOUT-001 acceptance and scope
+
+Create a `/about` page inspired by the reference site's personal intro, shuffleable cards, and experience timeline. Use clearly marked demo copy, the portfolio theme, responsive layouts, accessible controls, and reduced-motion support. Low risk, standard lane, no dependencies. Codex owns the page, story deck, page styles, navigation, public metadata, and this ticket.
+
+### ABOUT-001 completion evidence
+
+The new page includes demo profile copy, story cards that change when tapped, clicked, or activated by keyboard, values, sample milestones, and links into the existing portfolio. Navigation, public page metadata, and sitemap inclusion are connected. Automatic decorative animations play once and finish within five seconds; existing reduced-motion preferences remain supported. The contact and closing links use borderless text actions with animated accent underlines; card stack and icon movement use smoother easing.
+
+Validation passed: `npx tsc --noEmit`, scoped ESLint, and `git diff --check`. Browser review covered 1440×900 desktop light/dark and 390×844 mobile; mobile document width matched the viewport. Card changes were verified through click, Enter, and Space; focus stayed on the card and the live region announced the new note. No About-page animations repeat indefinitely. No test suite or production build was run.
+
+2026-10-18 visual refinements: removed the Pause/Shuffle strip in favor of the whole story card as the accessible cycle control. Buttons no longer have boxed borders or hover backgrounds. Underline sweeps, icon rotation, and the deck lift/stack respond with explicit smooth transitions. Keyboard focus outlines and reduced-motion behavior remain intact. Final independent review passed with no actionable findings.
+
+Typography review passed: the About headline uses the shared `page-title` size and bold weight, matching the Projects page at 24px on mobile and 36px on desktop. Section headings use the shared 20px/semibold scale; item headings use 16px/semibold; supporting copy uses 14px or 16px. Labels remain at least 10px. Laura approved the page and CSS candidate with no findings. Her source-only review relied on the coordinator’s browser evidence at 280px, 390px, and 1440px: no page overflow, and the story card grows at very narrow widths so the larger copy stays inside. Post-review checks passed: TypeScript, scoped ESLint, whitespace validation, and a fresh local browser comparison at 280px, 390px, and 1440px. About and Projects computed title styles match at 24px/700 on mobile and 36px/700 on desktop; the system font family matches, no viewport overflow appeared, and the story card fit its content. `http://127.0.0.1:3001/about` returned HTTP 200.
+
+Engineering Gates: intake, acceptance, implementation, responsive/accessibility review, scoped checks, independent review, and final diff review passed. No production build or automated test suite was run for this scoped visual update. `npm audit` reported 9 existing dependency vulnerabilities (2 moderate, 7 high); no package manifest or lockfile changed, so dependency remediation remains outside this task. Current completion: 8/11 tickets. Next: blocked CMS tickets EXP-001, CERT-001, and REC-001 still need database permissions.
 
 ## GEAR-001 acceptance and scope
 

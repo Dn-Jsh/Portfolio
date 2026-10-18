@@ -17,6 +17,10 @@ export const PUBLIC_PAGES = {
     title: "Projects",
     description: "Explore web apps, mobile apps, and developer tools built by Dan Jeshua, also known as dnjsh.",
   },
+  "/about": {
+    title: "More about me",
+    description: "A little more about Dan Jeshua's approach to learning, building, and sharing work.",
+  },
   "/experience": {
     title: "Experience",
     description: "Explore Dan Jeshua's (dnjsh) experience in web and mobile development, freelance projects, and team collaborations.",

@@ -2,6 +2,7 @@ import {
   Newspaper,
   Monitor,
   Share2,
+  UserRound,
   type LucideIcon,
 } from "lucide-react";
 
@@ -25,6 +26,7 @@ export const NAV_GROUPS: NavGroup[] = [
   },
   {
     links: [
+      { href: "/about", label: "About me", icon: UserRound },
       { href: "/projects", label: "Projects" },
       { href: "/experience", label: "Experience" },
       { href: "/stack", label: "Stack" },
