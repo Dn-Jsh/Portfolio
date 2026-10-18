@@ -184,13 +184,13 @@ try {
     const close = await qrDialog.getByRole("button", { name: "Close Instagram QR code" }).boundingBox();
     assert.ok(close && close.width >= 44 && close.height >= 44, "QR close control must keep its touch target");
   }
-  await touch.addStyleTag({ content: ".instagram-qr-dialog { --dialog-inline-space: 44px; --dialog-block-space: 34px; }" });
+  await touch.addStyleTag({ content: ".social-qr-dialog { --dialog-inline-space: 44px; --dialog-block-space: 34px; }" });
   await touch.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   const safeBounds = await qrDialog.boundingBox();
   assert.ok(safeBounds && safeBounds.x >= 43 && safeBounds.y >= 33 && safeBounds.x + safeBounds.width <= 801 && safeBounds.y + safeBounds.height <= 357, `QR dialog must respect simulated safe-area gutters: ${JSON.stringify(safeBounds)}`);
-  await qrDialog.getByRole("link", { name: /Open @dn_jsh/ }).scrollIntoViewIfNeeded();
-  const qrFooter = await qrDialog.getByRole("link", { name: /Open @dn_jsh/ }).boundingBox();
-  assert.ok(qrFooter && qrFooter.y >= 0 && qrFooter.y + qrFooter.height <= 390, "QR footer must remain reachable in landscape");
+  await qrDialog.getByRole("link", { name: "@dn_jsh", exact: true }).scrollIntoViewIfNeeded();
+  const qrAccount = await qrDialog.getByRole("link", { name: "@dn_jsh", exact: true }).boundingBox();
+  assert.ok(qrAccount && qrAccount.y >= 0 && qrAccount.y + qrAccount.height <= 390, "QR account must remain reachable in landscape");
   await touch.keyboard.press("Escape");
   await qrDialog.waitFor({ state: "hidden" });
   assert.ok(await qrTrigger.evaluate((element) => element === document.activeElement), "QR dialog must restore focus");

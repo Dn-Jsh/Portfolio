@@ -3,8 +3,10 @@ import { PageIntro } from "@/components/ui/PageIntro";
 import { SOCIALS } from "@/data/socials";
 import { ArrowUpRight, Share2 } from "lucide-react";
 import { getPublishedItems, getPageIntro } from "@/lib/portfolio-content";
-import { InstagramQrButton } from "@/components/socials/InstagramQrButton";
+import { SocialQrButton } from "@/components/socials/SocialQrButton";
 import { getPublicPageMetadata } from "@/lib/seo";
+import { createSocialQrDataUrl } from "@/lib/social-qr";
+import { resolveSocialProfile } from "@/lib/social-profile";
 
 export const dynamic = "force-dynamic";
 export const metadata = getPublicPageMetadata("/socials");
@@ -62,12 +64,17 @@ export default async function SocialsPage() {
     getPublishedItems<typeof SOCIALS[number]>("social", SOCIALS),
     getPageIntro("socials", { title: "socials", description: "Where to find me across the internet." }),
   ]);
+  const rowsWithQr = await Promise.all(socialRows.map(async ({ data, id }) => {
+    const social = resolveSocialProfile(data);
+    return { id, social, qrDataUrl: await createSocialQrDataUrl(social.link) };
+  }));
+
   return (
     <div className="page-enter">
       <PageIntro title={intro.title} description={intro.description} />
 
       <div className="flex flex-col">
-        {socialRows.map(({ data: social, id }, i) => (
+        {rowsWithQr.map(({ social, id, qrDataUrl }, i) => (
           <ScrollReveal key={id} delay={i * 0.06}>
             <div className="social-row flex items-center gap-3 border-b border-border content-row rounded-lg">
               <a
@@ -97,7 +104,7 @@ export default async function SocialsPage() {
                   className="text-muted opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity shrink-0"
                 />
               </a>
-              {social.icon.toLowerCase() === "instagram" && <InstagramQrButton />}
+              <SocialQrButton platform={social.platform} handle={social.handle} link={social.link} qrDataUrl={qrDataUrl} />
             </div>
           </ScrollReveal>
         ))}

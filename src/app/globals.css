@@ -286,7 +286,7 @@ body::-webkit-scrollbar {
 }
 
 @media (pointer: coarse) {
-  :where(button, .instagram-qr-profile) {
+  :where(button, .social-qr-account) {
     min-height: 2.75rem;
   }
 
@@ -880,13 +880,13 @@ a.certification-item:hover svg {
 
 .social-profile:focus-visible,
 .social-qr-trigger:focus-visible,
-.instagram-qr-close:focus-visible,
-.instagram-qr-profile:focus-visible {
+.social-qr-close:focus-visible,
+.social-qr-account:focus-visible {
   outline: 2px solid var(--accent);
 }
 
 .social-qr-trigger,
-.instagram-qr-close {
+.social-qr-close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -903,13 +903,13 @@ a.certification-item:hover svg {
 
 .social-qr-trigger:hover,
 .social-qr-trigger:focus-visible,
-.instagram-qr-close:hover {
+.social-qr-close:hover {
   transform: translateY(-2px);
   background: var(--accent-soft);
   color: var(--accent);
 }
 
-.instagram-qr-dialog {
+.social-qr-dialog {
   --dialog-inline-space: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
   --dialog-block-space: max(1rem, env(safe-area-inset-top), env(safe-area-inset-bottom));
   position: fixed;
@@ -928,15 +928,15 @@ a.certification-item:hover svg {
   background: var(--bg);
   color: var(--fg);
   box-shadow: 0 28px 100px rgb(0 0 0 / 45%);
-  animation: instagram-qr-enter 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: social-qr-enter 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-.instagram-qr-dialog::backdrop {
+.social-qr-dialog::backdrop {
   background: rgb(0 0 0 / 72%);
   backdrop-filter: blur(8px);
 }
 
-.instagram-qr-heading {
+.social-qr-heading {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -944,43 +944,51 @@ a.certification-item:hover svg {
   margin-bottom: 1rem;
 }
 
-.instagram-qr-close {
+.social-qr-close {
   width: 2.75rem;
   height: 2.75rem;
   flex-shrink: 0;
 }
 
-.instagram-qr-image {
+.social-qr-surface {
+  display: grid;
+  width: min(100%, 28rem, 58dvh);
+  aspect-ratio: 1;
+  place-items: center;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 0.9rem;
+  background: #fff;
+}
+
+.social-qr-image {
   display: block;
   width: 100%;
   height: auto;
-  max-height: min(58dvh, 32rem);
-  border: 1px solid var(--border);
-  border-radius: 0.9rem;
   object-fit: contain;
 }
 
-.instagram-qr-profile {
+.social-qr-account {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-top: 1rem;
+  min-height: 1.5rem;
+  margin-top: 0.125rem;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   transition: color 180ms ease;
 }
 
-.instagram-qr-profile:hover {
+.social-qr-account:hover {
   color: var(--accent);
 }
 
-@keyframes instagram-qr-enter {
+@keyframes social-qr-enter {
   from { opacity: 0; transform: translateY(10px) scale(0.97); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .instagram-qr-dialog {
+  .social-qr-dialog {
     animation: none;
   }
 }

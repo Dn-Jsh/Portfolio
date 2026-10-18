@@ -10,7 +10,8 @@
     "test:seo": "node --test tests/seo.test.mjs",
     "test:github": "node --test tests/github-contributions.test.mjs",
     "verify:seo": "node scripts/verify-seo.mjs",
-    "verify:responsive": "node scripts/verify-responsive.mjs"
+    "verify:responsive": "node scripts/verify-responsive.mjs",
+    "test:socials": "node --test tests/social-qr.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -25,6 +26,7 @@
     "next": "16.3.7",
     "next-mdx-remote": "^6.0.0",
     "next-themes": "^0.4.6",
+    "qrcode": "^1.5.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "three": "^0.186.1"
@@ -32,11 +34,14 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.186.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.7",
+    "jsqr": "^1.4.0",
+    "pngjs": "^7.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

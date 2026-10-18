@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getPublishedItems, getSiteSettings } from "@/lib/portfolio-content";
 import { SOCIALS } from "@/data/socials";
 import { createProfileStructuredData, SITE_HANDLE } from "@/lib/seo";
+import { resolveSocialProfile } from "@/lib/social-profile";
 
 type SiteSettings = {
   heroKicker: string;
@@ -28,7 +29,7 @@ export async function Hero() {
     }),
     getPublishedItems<typeof SOCIALS[number]>("social", SOCIALS),
   ]);
-  const socials = socialRows.map(({ data }) => data);
+  const socials = socialRows.map(({ data }) => resolveSocialProfile(data));
   const structuredData = createProfileStructuredData(
     `${settings.firstName} ${settings.lastName}`,
     socials.map((social) => social.link),
