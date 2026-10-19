@@ -3,7 +3,7 @@
 | ID | Task | Owner | Status |
 | --- | --- | --- | --- |
 | ABOUT-001 | Add a theme-matched, animated demo About page and navigation | Codex; Laura review | Done |
-| HOME-001 | Align the homepage social row with the full-width GitHub section | Codex; Laura review | Done |
+| HOME-001 | Extend the homepage portrait to align with the bio and social row | Codex; Laura review | Done |
 | EXP-001 | Replace the two placeholder roles with Domain Seller at Domain Nerds, 2019–2020 | Codex | Blocked |
 | CERT-001 | Remove the five demo AWS, Meta, and freeCodeCamp certifications | Codex | Blocked |
 | REC-001 | Remove the three demo recommendations | Codex | Blocked |
@@ -31,13 +31,13 @@ Engineering Gates: intake, acceptance, implementation, responsive/accessibility 
 
 ## HOME-001 acceptance and scope
 
-Move the homepage social links below the two-column portrait and bio layout so their rule spans the content width and aligns with the GitHub section. Preserve the existing profile links and responsive behavior. Low risk, standard lane, no dependencies. Codex owns `src/components/home/Hero.tsx`, the homepage styles in `src/app/globals.css`, and this ticket.
+Keep homepage socials below the bio in the right-hand column. At desktop widths, extend the portrait frame to the bottom of the social row while preserving its existing minimum height. Keep the portrait's existing compact size on mobile and retain the full-width stats separator. Low risk, standard lane, no dependencies. Codex owns `src/components/home/Hero.tsx`, the homepage styles in `src/app/globals.css`, and this ticket.
 
 ### HOME-001 completion evidence
 
-The social links now sit in a full-width navigation row with a subtle bottom rule that matches the GitHub card's content edges after its reveal animation completes. The existing stats separator was removed to avoid stacking two nearby lines. Browser review passed at 390px, 813px, and 1440px with no horizontal overflow; the 813px layout shows one row and the mobile layout wraps naturally. The local homepage returned HTTP 200. No automated test suite or production build was run.
+The portrait now stretches with the bio column on desktop, ending at the same y-coordinate as the existing social row. The socials remain under the bio; no full-width border was added below them. The existing stats separator remains. Local browser review confirmed matching portrait/social bottoms at 1440px (452px) and 813px (490px). At 390px the portrait stays 160px tall and the content stacks without horizontal overflow. The homepage returned HTTP 200. No automated test suite or production build was run.
 
-Laura independently reviewed the final source candidate and approved it with no actionable findings. Reviewed SHA-256: `Hero.tsx` `DBD51EC707D5FB22A5D17D1F22E17D2F95F6A6EE4A142E98F262CBBCBB482CFC`; `globals.css` `5414978FC67E3865FC1012939DAF6D904057490D9BDB8FC93E4027858F0A8CCF`. `npm audit` reported 9 existing dependency vulnerabilities (2 moderate, 7 high); no dependency files changed.
+Laura independently reviewed the corrected Hero markup and relevant homepage CSS hunks and approved them with no actionable findings. Reviewed SHA-256: `Hero.tsx` `FB533639EDD1F09CD1E1C8EB604B0CD2B80A8D75FC4ED985815C706200DD37EE`; `globals.css` `DFFB9A5202969DA2456290612DA55C5C41C83BE155A1DF680A40044823E70B89` (the stylesheet hash also covers unrelated ABOUT-002 gallery changes excluded from review). `npm audit` reported 9 existing dependency vulnerabilities (2 moderate, 7 high); no dependency files changed.
 
 Current completion: 9/12 tickets. The three CMS tickets EXP-001, CERT-001, and REC-001 remain blocked by database permissions.
 
