@@ -3,6 +3,7 @@
 | ID | Task | Owner | Status |
 | --- | --- | --- | --- |
 | ABOUT-001 | Add a theme-matched, animated demo About page and navigation | Codex; Laura review | Done |
+| HOME-001 | Align the homepage social row with the full-width GitHub section | Codex | Done |
 | EXP-001 | Replace the two placeholder roles with Domain Seller at Domain Nerds, 2019–2020 | Codex | Blocked |
 | CERT-001 | Remove the five demo AWS, Meta, and freeCodeCamp certifications | Codex | Blocked |
 | REC-001 | Remove the three demo recommendations | Codex | Blocked |
@@ -27,6 +28,16 @@ Validation passed: `npx tsc --noEmit`, scoped ESLint, and `git diff --check`. Br
 Typography review passed: the About headline uses the shared `page-title` size and bold weight, matching the Projects page at 24px on mobile and 36px on desktop. Section headings use the shared 20px/semibold scale; item headings use 16px/semibold; supporting copy uses 14px or 16px. Labels remain at least 10px. Laura approved the page and CSS candidate with no findings. Her source-only review relied on the coordinator’s browser evidence at 280px, 390px, and 1440px: no page overflow, and the story card grows at very narrow widths so the larger copy stays inside. Post-review checks passed: TypeScript, scoped ESLint, whitespace validation, and a fresh local browser comparison at 280px, 390px, and 1440px. About and Projects computed title styles match at 24px/700 on mobile and 36px/700 on desktop; the system font family matches, no viewport overflow appeared, and the story card fit its content. `http://127.0.0.1:3001/about` returned HTTP 200.
 
 Engineering Gates: intake, acceptance, implementation, responsive/accessibility review, scoped checks, independent review, and final diff review passed. No production build or automated test suite was run for this scoped visual update. `npm audit` reported 9 existing dependency vulnerabilities (2 moderate, 7 high); no package manifest or lockfile changed, so dependency remediation remains outside this task. Current completion: 8/11 tickets. Next: blocked CMS tickets EXP-001, CERT-001, and REC-001 still need database permissions.
+
+## HOME-001 acceptance and scope
+
+Move the homepage social links below the two-column portrait and bio layout so their rule spans the content width and aligns with the GitHub section. Preserve the existing profile links and responsive behavior. Low risk, standard lane, no dependencies. Codex owns `src/components/home/Hero.tsx`, the homepage styles in `src/app/globals.css`, and this ticket.
+
+### HOME-001 completion evidence
+
+The social links now sit in a full-width navigation row with a subtle bottom rule that matches the GitHub card's content edges after its reveal animation completes. The existing stats separator was removed to avoid stacking two nearby lines. Browser review passed at 390px, 813px, and 1440px with no horizontal overflow; the 813px layout shows one row and the mobile layout wraps naturally. The local homepage returned HTTP 200. No automated test suite or production build was run.
+
+Current completion: 9/12 tickets. The three CMS tickets EXP-001, CERT-001, and REC-001 remain blocked by database permissions.
 
 ## GEAR-001 acceptance and scope
 

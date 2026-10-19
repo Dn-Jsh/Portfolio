@@ -87,28 +87,28 @@ export async function Hero() {
               {settings.bioSecond}
             </p>
 
-            {/* Social links */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
-              {socials.slice(0, 5).map((social) => (
-                <a
-                  key={social.platform}
-                  href={social.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-social-link min-h-11 text-muted flex items-center gap-1"
-                >
-                  {social.platform.toLowerCase()}
-                  <ArrowUpRight size={13} className="opacity-60" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
           </div>
         </div>
+
+        <nav aria-label="Social profiles" className="hero-socials flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
+          {socials.slice(0, 5).map((social) => (
+            <a
+              key={social.platform}
+              href={social.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-social-link min-h-11 text-muted flex items-center gap-1"
+            >
+              {social.platform.toLowerCase()}
+              <ArrowUpRight size={13} className="opacity-60" aria-hidden="true" />
+            </a>
+          ))}
+        </nav>
       </div>
 
       {/* Profile highlights */}
       <ScrollReveal delay={0.16} direction="scale">
-        <div className="hero-stats border-t border-border">
+        <div className="hero-stats">
           {settings.stats.map((stat, index) => (
             <div key={`${stat.label}-${index}`} className="hero-stat">
               <div className="hero-stat-value text-2xl md:text-3xl font-bold tracking-tight">{stat.value}</div>
