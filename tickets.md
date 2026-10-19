@@ -3,7 +3,7 @@
 | ID | Task | Owner | Status |
 | --- | --- | --- | --- |
 | ABOUT-001 | Add a theme-matched, animated demo About page and navigation | Codex; Laura review | Done |
-| HOME-001 | Align the homepage social row with the full-width GitHub section | Codex | Done |
+| HOME-001 | Align the homepage social row with the full-width GitHub section | Codex; Laura review | Done |
 | EXP-001 | Replace the two placeholder roles with Domain Seller at Domain Nerds, 2019–2020 | Codex | Blocked |
 | CERT-001 | Remove the five demo AWS, Meta, and freeCodeCamp certifications | Codex | Blocked |
 | REC-001 | Remove the three demo recommendations | Codex | Blocked |
@@ -36,6 +36,8 @@ Move the homepage social links below the two-column portrait and bio layout so t
 ### HOME-001 completion evidence
 
 The social links now sit in a full-width navigation row with a subtle bottom rule that matches the GitHub card's content edges after its reveal animation completes. The existing stats separator was removed to avoid stacking two nearby lines. Browser review passed at 390px, 813px, and 1440px with no horizontal overflow; the 813px layout shows one row and the mobile layout wraps naturally. The local homepage returned HTTP 200. No automated test suite or production build was run.
+
+Laura independently reviewed the final source candidate and approved it with no actionable findings. Reviewed SHA-256: `Hero.tsx` `DBD51EC707D5FB22A5D17D1F22E17D2F95F6A6EE4A142E98F262CBBCBB482CFC`; `globals.css` `5414978FC67E3865FC1012939DAF6D904057490D9BDB8FC93E4027858F0A8CCF`. `npm audit` reported 9 existing dependency vulnerabilities (2 moderate, 7 high); no dependency files changed.
 
 Current completion: 9/12 tickets. The three CMS tickets EXP-001, CERT-001, and REC-001 remain blocked by database permissions.
 
