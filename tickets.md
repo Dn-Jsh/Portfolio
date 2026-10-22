@@ -12,6 +12,41 @@
 | GH-001 | Display Dn-Jsh's real GitHub contributions instead of generated activity | Codex; Laura review | Done |
 | SOC-001 | Add clean scannable QR dialogs to every social and correct TikTok/Facebook/X links | Codex; Laura review | Done |
 | GEAR-001 | Remove 3D previews and tilt from every gear item; keep product photos | Codex; Laura review | Done |
+| PERF-001 | Optimize portrait/gear delivery and defer the homepage authentication SDK | Codex; Laura review | Done |
+
+## PERF-001 acceptance and scope
+
+Reduce image transfer for the bundled homepage portrait and five gear photos through Next.js responsive image optimization. Preserve externally hosted CMS image compatibility, image alternatives, current appearance, responsive layouts, and eager/lazy loading behavior. Load the browser authentication SDK only for an actual email callback; preserve code exchange, invitation/recovery sessions, URL cleanup, error handling, and editor redirects. Measure production image and JavaScript transfers before and after at 390px and 1440px. Require passing TypeScript, lint, existing tests, targeted callback regression tests, production compilation, browser checks, and independent Laura review.
+
+Standard lane, low risk presentation changes plus a scoped authentication module-loading change; no dependencies. Codex owns `Hero.tsx`, `GearViewer.tsx`, `AuthEmailLanding.tsx`, callback tests, and this record. Existing unrelated changes are preserved. No remote writes, credentials, database, publication behavior, push, or deployment changes are authorized. The project brief and navigation guide are absent. Skills: Caveman, Clean Code TypeScript, Ponytail (full), Engineering Gates, Completion Mandate; reviewer: Code Review plus relevant accessibility guidance. Coordinator runtime model/effort and usage telemetry are not exposed.
+
+### PERF-001 completion evidence, 2026-10-22
+
+Bundled portrait and gear photos now use Next.js responsive image optimization. Portrait sizes account for the existing 1.6 visual scale; gear sizes stop growing beyond the content column. External HTTPS, Supabase, and protocol-relative CMS images retain their original delivery behavior. Existing alt text, eager/lazy loading, portrait crop, photo transparency, CSS, navigation, and reduced-motion behavior are preserved. The homepage imports the browser Supabase module inside the existing callback handler after callback detection and sensitive URL cleanup, so ordinary visits do not download the authentication SDK.
+
+Production Chromium measurements at device scale 1, fresh browser contexts, reduced motion, all lazy images decoded, identical Webpack build settings:
+
+| Asset/route | Width | Before | After | Reduction |
+| --- | --- | --- | --- | --- |
+| Homepage portrait | 390px | 244,797 B | 7,748 B | 96.8% |
+| Homepage portrait | 1440px | 244,797 B | 12,320 B | 95.0% |
+| Five gear photos combined | 390px and 1440px | 6,363,664 B | 158,392 B | 97.5% |
+| Homepage compressed JavaScript | 390px | 264,844 B | 195,518 B | 26.2% |
+| Homepage compressed JavaScript | 1440px | 268,241 B | 198,915 B | 25.8% |
+
+These are transferred body sizes, not Lighthouse scores or promised production latency gains. Source image files remain intact. Browser checks passed for HTTP 200, decoded images, no horizontal overflow, no uncaught client errors, absence of the auth SDK in initial homepage scripts, mobile dialog open/Escape/focus restoration, and theme switching. Final mobile homepage and desktop gear screenshots were visually reviewed. [Before measurements](C:/Users/danje/.codex/visualizations/2026/10/22/01a163eb-a220-7641-aa31-6890d694f994/before.json), [after measurements](C:/Users/danje/.codex/visualizations/2026/10/22/01a163eb-a220-7641-aa31-6890d694f994/after.json), and [repeatable browser measurement script](C:/Users/danje/.codex/visualizations/2026/10/22/01a163eb-a220-7641-aa31-6890d694f994/measure-performance.cjs) are saved locally beside the before/after screenshots. Two initial measurement-harness assertions were corrected for existing decorative images and the mobile-only theme control location; no application repair was required.
+
+Validation passed: `npm run build -- --webpack`; `npx tsc --noEmit`; scoped ESLint across the three changed components and new callback test; `git diff --check`; `node --test tests/auth-email-landing.test.mjs tests/seo.test.mjs tests/github-contributions.test.mjs tests/social-qr.test.mjs` (21 tests including subtests); and `npm run verify:seo -- http://127.0.0.1:3002` (12 public URLs, sitemap, robots, structured data, blog listing, editor exclusions, missing-post 404). Six callback regression cases cover ordinary visits, code/flowId exchange, invite and recovery sessions, invalid callbacks, exchange failures, and deferred-import failures. Post-review targeted callback tests, TypeScript, ESLint, and whitespace checks passed again.
+
+Laura independently approved the same final source candidate with no blocking findings. She traced imports/callers, schema image fields, Next configuration and version-matched docs; independently reran all six callback tests, scoped lint and diff checks; and used Next `getImageProps` to confirm optimized local sources and preserved external URLs. SHA256: AuthEmailLanding `5D676376F9D06FC5CF8AC633FDC4DB87A16F5F6592A3635BAEDBB1C27FCC2B42`; Hero `7FFAA9BC13955D0F44D115CF82C1FEBA237FAF7F391D94C5D9B1E762590C2A79`; GearViewer `5AB3EA05492DAEDC5F1C42891BC3D6220D96FA4B3CADA7763EBABDAB2CAC9488`; callback test `CA3C1E0C1A194272B601873D4513A3A6FF729711E95EC767535495559AB11F0F`. Requested reviewer role: gpt-6.1-sol medium; effective settings and usage telemetry unavailable.
+
+Limitations: default `npm run build` failed before source changes because the local Turbopack persistence directory could not load (`invalid digit found in string`); the same version's Webpack production build passed before and after. No build configuration was changed. `npm audit --omit=dev --json` reports four existing affected packages (two moderate, two high: Next.js, source-map-js, postcss-selector-parser, and its parent @tailwindcss/typography). Dependency remediation remains open; manifests and lockfile are unchanged. No live email session, authenticated editor action, push, or deployment was performed.
+
+Engineering gates: intake/criteria/ownership/dependencies/constraints (01–06), repository conventions/blast radius/contracts/data flow/check selection (07–12), skills/style/types/names/duplication/bundle splitting/SSR/input handling/error handling (14–22), Webpack production build/typecheck/lint/unit and integration/browser checks (30–34), changed-code security review and documented dependency audit (35), preserved accessibility and keyboard checks (36), and final diff/criterion evidence (37) passed within this scope. Parallel implementation worktree (13), schema/migrations/indexes/RLS (23–29), and gold-lane dual approval are N/A: one implementer, independent read-only reviewer, no data or authorization changes, standard lane. The Turbopack check and dependency audit limitations above remain explicit, not false passes. Current optimization milestone: 1/1 Done; no implementation blockers. Existing unrelated tickets retain their statuses.
+
+### PERF-001 Git delivery, 2026-10-22
+
+The user explicitly authorized pushing the optimization to `main`. Fetch confirmed local `main` and `origin/main` have zero divergence. All four source/test hashes match Laura's approved candidate. The pre-commit full `npm audit` reports nine existing dependency vulnerabilities (two moderate, seven high); no dependency files changed. Commit only the three optimized components, callback tests, and PERF-001 ticket row/evidence. Stage this ticket record against `HEAD` so unrelated About/SEO ticket edits remain local. Existing build, tests, typecheck, lint, browser, SEO, and independent review evidence above remains valid for the unchanged source candidate. Push without force and verify the remote `main` commit; unrelated source edits, images, Windows metadata, and documents remain local.
 
 ## ABOUT-001 acceptance and scope
 

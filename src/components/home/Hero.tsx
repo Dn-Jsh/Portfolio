@@ -30,6 +30,7 @@ export async function Hero() {
     getPublishedItems<typeof SOCIALS[number]>("social", SOCIALS),
   ]);
   const socials = socialRows.map(({ data }) => resolveSocialProfile(data));
+  const profileImage = settings.profileImage || "/profile-nobg.png";
   const structuredData = createProfileStructuredData(
     `${settings.firstName} ${settings.lastName}`,
     socials.map((social) => social.link),
@@ -54,13 +55,13 @@ export async function Hero() {
           <div className="hero-image-frame hero-portrait rounded-xl shrink-0 relative">
             <div className="relative h-full w-full overflow-hidden rounded-[inherit] bg-bg">
               <Image
-                src={settings.profileImage || "/profile-nobg.png"}
+                src={profileImage}
                 alt={`${settings.firstName} ${settings.lastName}`}
                 fill
-                sizes="(max-width: 639px) 128px, (max-width: 1279px) 176px, 208px"
+                sizes="(max-width: 639px) 205px, (max-width: 1279px) 282px, 333px"
                 loading="eager"
                 fetchPriority="high"
-                unoptimized
+                unoptimized={!profileImage.startsWith("/") || profileImage.startsWith("//")}
                 className="hero-photo w-full h-full object-cover object-[50%_95%] scale-[1.6] grayscale contrast-[1.2] brightness-90 hover:grayscale-0 hover:contrast-100"
               />
             </div>

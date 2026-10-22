@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 
 export function AuthEmailLanding() {
   const router = useRouter();
@@ -32,6 +31,7 @@ export function AuthEmailLanding() {
 
     void (async () => {
       try {
+        const { createBrowserSupabaseClient } = await import("@/lib/supabase/browser");
         const supabase = createBrowserSupabaseClient();
         const { error } = code
           ? await supabase.auth.exchangeCodeForSession(code, flowId ? { flowId } : undefined)

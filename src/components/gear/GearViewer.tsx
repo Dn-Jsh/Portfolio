@@ -11,9 +11,9 @@ export function GearViewer({ item, featured = false }: { item: GearItem; feature
               src={item.image}
               alt={item.imageAlt}
               fill
-              sizes={featured ? "(max-width: 700px) 90vw, 50vw" : "(max-width: 560px) 90vw, 35vw"}
+              sizes={featured ? "(max-width: 700px) 90vw, 600px" : "(max-width: 560px) 90vw, 384px"}
               loading={featured ? "eager" : "lazy"}
-              unoptimized
+              unoptimized={!item.image.startsWith("/") || item.image.startsWith("//")}
               className="object-contain"
             />
           </span>
