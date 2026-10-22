@@ -19,7 +19,7 @@ export const PUBLIC_PAGES = {
   },
   "/about": {
     title: "More about me",
-    description: "A little more about Dan Jeshua's approach to learning, building, and sharing work.",
+    description: "Meet Dan Jeshua (dnjsh), a PUP BSIT student and freelance developer building web and mobile apps, with a love for guitar and worship technology.",
   },
   "/experience": {
     title: "Experience",

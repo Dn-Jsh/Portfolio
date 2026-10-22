@@ -1210,8 +1210,7 @@ a.certification-item:hover svg {
   letter-spacing: 0.08em;
 }
 
-.about-demo-tag,
-.about-sample-caption {
+.about-profile-tag {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -1222,7 +1221,7 @@ a.certification-item:hover svg {
   white-space: nowrap;
 }
 
-.about-demo-dot,
+.about-profile-dot,
 .about-open-dot {
   position: relative;
   width: 0.45rem;
@@ -1232,7 +1231,7 @@ a.certification-item:hover svg {
   background: var(--accent);
 }
 
-.about-demo-dot::after {
+.about-profile-dot::after {
   position: absolute;
   inset: -0.2rem;
   border: 1px solid var(--accent);
@@ -1290,7 +1289,7 @@ a.certification-item:hover svg {
   line-height: 1.5;
 }
 
-.about-demo-note {
+.about-bio {
   max-width: 30rem;
   margin: 1rem 0 0;
   color: var(--muted);
@@ -1491,101 +1490,17 @@ a.certification-item:hover svg {
 
 .about-note-art {
   position: relative;
-  display: grid;
   min-height: 9rem;
   flex: 1;
-  place-items: center;
   overflow: hidden;
   margin-block: 0.75rem;
   border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
   border-radius: 0.35rem;
-  background-image: radial-gradient(color-mix(in srgb, var(--muted) 20%, transparent) 0.7px, transparent 0.7px);
-  background-size: 11px 11px;
 }
 
-.about-note-art--curiosity {
-  background-color: color-mix(in srgb, var(--bg) 60%, #f4e8ec);
-}
-
-.about-note-art--making {
-  background-color: color-mix(in srgb, var(--bg) 62%, #e6ebdf);
-}
-
-.about-note-art--sharing {
-  background-color: color-mix(in srgb, var(--bg) 62%, #e5e9ef);
-}
-
-.about-note-orbit {
-  position: absolute;
-  width: 9rem;
-  height: 9rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 27%, transparent);
-  border-radius: 50%;
-  animation: about-orbit 4.8s linear 1;
-}
-
-.about-note-orbit-one {
-  transform: scaleX(0.5) rotate(-28deg);
-}
-
-.about-note-orbit-two {
-  transform: scaleY(0.55) rotate(34deg);
-  animation-direction: reverse;
-}
-
-.about-note-word {
-  color: color-mix(in srgb, var(--fg) 78%, transparent);
-  font-size: clamp(0.9rem, 2.4vw, 1.35rem);
-  letter-spacing: -0.03em;
-  transform: rotate(-9deg);
-  transition: color 360ms ease, transform 480ms var(--about-motion-easing);
-}
-
-.about-note-card:hover .about-note-word {
-  color: var(--accent);
-  transform: rotate(-2deg) scale(1.06);
-}
-
-.about-note-icon-wrap {
-  position: absolute;
-  top: calc(50% - 3.5rem);
-  left: calc(50% - 1.5rem);
-  display: grid;
-  width: 3rem;
-  height: 3rem;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--bg) 76%, transparent);
-  color: var(--accent);
-  box-shadow: 0 0.4rem 1.5rem color-mix(in srgb, var(--accent) 12%, transparent);
-  animation: about-icon-float 4s ease-in-out 1;
-  transition: box-shadow 400ms ease;
-}
-
-.about-note-card:hover .about-note-icon-wrap {
-  box-shadow: 0 0 1.1rem color-mix(in srgb, var(--accent) 26%, transparent);
-}
-
-.about-note-spark {
-  position: absolute;
-  width: 0.62rem;
-  aspect-ratio: 1;
-  background: var(--accent);
-  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
-}
-
-.about-note-spark-one {
-  top: 22%;
-  right: 22%;
-  animation: about-spark-drift 3.2s ease-in-out 1 alternate;
-}
-
-.about-note-spark-two {
-  bottom: 21%;
-  left: 23%;
-  width: 0.45rem;
-  animation: about-spark-drift 3.8s ease-in-out 1 alternate-reverse;
+.about-note-photo {
+  object-fit: cover;
+  object-position: center 40%;
 }
 
 .about-note-copy {
@@ -1742,10 +1657,6 @@ a.certification-item:hover svg {
   margin-bottom: 1.3rem;
 }
 
-.about-sample-caption {
-  padding-bottom: 0.45rem;
-}
-
 .about-timeline {
   margin: 0;
   border-top: 1px solid var(--border);
@@ -1867,19 +1778,6 @@ a.certification-item:hover svg {
 @keyframes about-status-pulse {
   0% { opacity: 0.8; transform: scale(0.6); }
   100% { opacity: 0; transform: scale(1.6); }
-}
-
-@keyframes about-orbit {
-  to { rotate: 360deg; }
-}
-
-@keyframes about-icon-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-0.35rem); }
-}
-
-@keyframes about-spark-drift {
-  to { transform: translate(0.35rem, -0.3rem) rotate(24deg); }
 }
 
 @keyframes about-hint-bob {

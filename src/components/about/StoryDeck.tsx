@@ -1,46 +1,39 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
-import { Code2, Hand, HeartHandshake, Sparkles, type LucideIcon } from "lucide-react";
+import { Hand } from "lucide-react";
 
-const STORY_CARDS: Array<{
-  id: string;
-  index: string;
-  title: string;
-  text: string;
-  word: string;
-  icon: LucideIcon;
-}> = [
+const STORY_CARDS = [
   {
     id: "curiosity",
     index: "01",
-    title: "Stay curious",
-    text: "Start with a question. Keep following it.",
-    word: "wonder",
-    icon: Sparkles,
+    title: "Guitar in hand",
+    text: "Away from the keyboard, there’s music.",
+    image: "/about/guitar-performance.png",
+    imageAlt: "Playing electric guitar onstage.",
   },
   {
     id: "making",
     index: "02",
-    title: "Make it real",
-    text: "A small idea gets better once it exists.",
-    word: "create",
-    icon: Code2,
+    title: "Finding my own path",
+    text: "Learning, freelancing, and building a future in tech.",
+    image: "/about/stairway-portrait.jpg",
+    imageAlt: "Looking up at the camera while standing on a staircase.",
   },
   {
     id: "sharing",
     index: "03",
-    title: "Share the good bits",
-    text: "Leave a few notes for whoever comes next.",
-    word: "together",
-    icon: HeartHandshake,
+    title: "Still a work in progress",
+    text: "Student, developer, and always learning.",
+    image: "/about/mirror-selfie.png",
+    imageAlt: "Mirror selfie in a light jacket and white shirt.",
   },
-];
+] as const;
 
 export function StoryDeck() {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeCard = STORY_CARDS[activeIndex];
-  const StoryIcon = activeCard.icon;
 
   function shuffleCard() {
     setActiveIndex((currentIndex) => {
@@ -50,7 +43,7 @@ export function StoryDeck() {
   }
 
   return (
-    <div className="about-deck" role="group" aria-label="Demo story card deck">
+    <div className="about-deck" role="group" aria-label="Personal photo card deck">
       <div className="about-deck-stack" aria-hidden="true">
         <div className="about-deck-shadow about-deck-shadow-back" />
         <div className="about-deck-shadow about-deck-shadow-front" />
@@ -59,24 +52,23 @@ export function StoryDeck() {
       <article className={`about-note-card about-note-card--${activeCard.id}`}>
         <div key={activeCard.id} className="about-note-card-content">
           <div className="about-note-topline">
-            <span>DN / NOTES</span>
-            <span>DEMO {activeCard.index}</span>
+            <span>DN / OFFLINE</span>
+            <span>PHOTO {activeCard.index}</span>
           </div>
 
-          <div className={`about-note-art about-note-art--${activeCard.id}`} aria-hidden="true">
-            <span className="about-note-orbit about-note-orbit-one" />
-            <span className="about-note-orbit about-note-orbit-two" />
-            <span className="about-note-word">{activeCard.word}</span>
-            <span className="about-note-icon-wrap">
-              <StoryIcon size={24} strokeWidth={1.4} />
-            </span>
-            <span className="about-note-spark about-note-spark-one" />
-            <span className="about-note-spark about-note-spark-two" />
+          <div className="about-note-art">
+            <Image
+              className="about-note-photo"
+              src={activeCard.image}
+              alt={activeCard.imageAlt}
+              fill
+              sizes="(max-width: 760px) calc(100vw - 3rem), 21rem"
+            />
           </div>
 
           <div className="about-note-copy">
             <div>
-              <p className="about-note-eyebrow">A LITTLE REMINDER</p>
+              <p className="about-note-eyebrow">A LITTLE OF MY LIFE</p>
               <h2>{activeCard.title}</h2>
               <p>{activeCard.text}</p>
             </div>
@@ -87,14 +79,14 @@ export function StoryDeck() {
           type="button"
           className="about-note-card-trigger"
           onClick={shuffleCard}
-          aria-label="Show another demo story card"
+          aria-label="Show another photo card"
         />
       </article>
 
       <p className="about-deck-hint">
         Tap or click the card to explore <Hand size={13} aria-hidden="true" />
       </p>
-      <p className="sr-only" aria-live="polite">Showing demo note: {activeCard.title}</p>
+      <p className="sr-only" aria-live="polite">Showing photo card: {activeCard.title}</p>
     </div>
   );
 }

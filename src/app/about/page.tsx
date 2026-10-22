@@ -2,6 +2,7 @@ import { ArrowUpRight, Compass, Heart, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { StoryDeck } from "@/components/about/StoryDeck";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { EXPERIENCE } from "@/data/experience";
 import { getPublicPageMetadata } from "@/lib/seo";
 
 export const metadata = getPublicPageMetadata("/about");
@@ -10,48 +11,39 @@ const VALUES = [
   {
     number: "01",
     title: "Stay curious",
-    description: "Ask one more question. Follow the interesting thread.",
+    description: "I learn by building, asking questions, and working through the parts I don’t understand yet.",
     icon: Compass,
   },
   {
     number: "02",
     title: "Make it useful",
-    description: "Thoughtful details can turn a good idea into a good experience.",
+    description: "I want the apps I build to help someone get something done, with fewer steps and less friction.",
     icon: Sparkles,
   },
   {
     number: "03",
     title: "Share the process",
-    description: "Keep learning out loud and make room for other people.",
+    description: "I write about what I’m making, including the tools, decisions, and lessons along the way.",
     icon: Heart,
   },
 ];
 
 const MILESTONES = [
   {
-    year: "2026",
-    label: "A new chapter",
-    title: "Independent projects",
+    year: "Now",
+    label: "Personal project",
+    title: "Anointed Worship",
     description:
-      "Demo milestone — exploring an idea from the first sketch through the final little details.",
-    tags: ["Product thinking", "Building", "Iteration"],
+      "I’m building a shared space for worship teams to prepare service plans, chord charts, lyrics, and schedules. It brings my interest in music together with the software I make.",
+    tags: ["Next.js", "TypeScript", "Supabase"],
   },
-  {
-    year: "2025",
-    label: "Along the way",
-    title: "Community & collaboration",
-    description:
-      "Sample chapter — learning alongside others, sharing useful notes, and making things together.",
-    tags: ["Community", "Learning", "Sharing"],
-  },
-  {
-    year: "2024",
-    label: "The beginning",
-    title: "Learning by making",
-    description:
-      "Sample chapter — small experiments, steady practice, and lessons from finishing projects.",
-    tags: ["Curiosity", "Practice", "Projects"],
-  },
+  ...EXPERIENCE.map((experience) => ({
+    year: experience.period,
+    label: experience.company,
+    title: experience.role,
+    description: experience.description,
+    tags: experience.skills,
+  })),
 ];
 
 export default function AboutPage() {
@@ -64,15 +56,15 @@ export default function AboutPage() {
               <span aria-hidden="true" className="page-kicker-mark" />
               DAN JESHUA / ABOUT
             </span>
-            <span className="about-demo-tag">
-              <span aria-hidden="true" className="about-demo-dot" />
-              SAMPLE PROFILE
+            <span className="about-profile-tag">
+              <span aria-hidden="true" className="about-profile-dot" />
+              BEYOND CODE
             </span>
           </div>
 
           <div className="about-hero-grid">
             <div className="about-copy">
-              <p className="about-role">SOFTWARE DEVELOPER <span>·</span> DEMO CONTENT</p>
+              <p className="about-role">FULL-STACK DEVELOPER <span>·</span> BSIT / PUP</p>
               <h1 id="about-title" className="about-title page-title font-bold">
                 More about
                 <span className="about-title-last-line">
@@ -80,12 +72,15 @@ export default function AboutPage() {
                 </span>
               </h1>
               <p className="about-lede">
-                Hi, I’m Dan. I like making digital experiences that feel thoughtful,
-                useful, and a little bit unexpected.
+                Hi, I’m Dan Jeshua, also known as dnjsh. I’m a fourth-year BSIT
+                student at PUP, a freelance developer, and someone who enjoys
+                turning an idea into a working web or mobile app.
               </p>
-              <p className="about-demo-note">
-                This is placeholder copy for the page demo. Swap in your own story,
-                favorite things, and photos when you’re ready.
+              <p className="about-bio">
+                These days, I’m sharpening my craft through client work and
+                personal projects. Away from the keyboard, I play guitar.
+                Anointed Worship brings those two parts of my life together:
+                building software that helps worship teams prepare and stay connected.
               </p>
 
               <div className="about-actions">
@@ -94,7 +89,7 @@ export default function AboutPage() {
                 </Link>
                 <span className="about-open-note">
                   <span aria-hidden="true" className="about-open-dot" />
-                  Open to good ideas
+                  Open to work & collaboration
                 </span>
               </div>
             </div>
@@ -119,7 +114,7 @@ export default function AboutPage() {
               <h2 id="values-title">A few things I value</h2>
             </div>
             <p className="about-section-aside">
-              The demo version of what guides the work, day to day.
+              How I approach the work, one project at a time.
             </p>
           </div>
 
@@ -140,13 +135,15 @@ export default function AboutPage() {
         <section className="about-timeline-section" aria-labelledby="timeline-title">
           <div className="about-section-heading about-timeline-heading">
             <div>
-              <p className="about-section-index">02 / EXPERIENCE</p>
+              <p className="about-section-index">02 / MY JOURNEY</p>
               <h2 id="timeline-title">The path so far</h2>
             </div>
-            <span className="about-sample-caption">DEMO MILESTONES</span>
+            <Link href="/experience" className="about-contact-link">
+              Full experience <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
           </div>
 
-          <ol className="about-timeline" aria-label="Sample experience timeline">
+          <ol className="about-timeline" aria-label="Projects and experience timeline">
             {MILESTONES.map((milestone) => (
               <li key={milestone.year} className="about-milestone">
                 <div className="about-milestone-date">
@@ -170,11 +167,11 @@ export default function AboutPage() {
       <ScrollReveal>
         <section className="about-cta" aria-labelledby="about-cta-title">
           <div>
-            <p className="about-section-index">THAT’S THE DEMO</p>
-            <h2 id="about-cta-title">Your story goes here.</h2>
+            <p className="about-section-index">LET’S BUILD SOMETHING</p>
+            <h2 id="about-cta-title">Have a project in mind?</h2>
           </div>
           <Link href="/socials" className="about-cta-link">
-            Find me around <ArrowUpRight size={16} aria-hidden="true" />
+            Let’s talk <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
         </section>
       </ScrollReveal>
