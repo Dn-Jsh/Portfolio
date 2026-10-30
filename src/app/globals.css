@@ -1880,3 +1880,151 @@ a.certification-item:hover svg {
     min-height: 19.5rem;
   }
 }
+
+/* Native dialogs keep keyboard focus contained and restore the project trigger. */
+.project-dialog {
+  --project-accent: var(--accent);
+  --project-soft: var(--accent-soft);
+  width: min(68rem, calc(100vw - 3rem));
+  max-height: calc(100dvh - 3rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 1.75rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgb(0 0 0 / 28%);
+}
+.project-dialog[open] { display: flex; flex-direction: column; animation: project-dialog-enter 200ms ease-out; }
+.project-dialog::backdrop { background: rgb(12 15 13 / 60%); backdrop-filter: none; }
+.project-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
+  padding: 1.25rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.project-dialog-identity { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+.project-dialog-mark {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 0.9rem;
+  background: var(--project-soft);
+  color: var(--project-accent);
+}
+.project-dialog-caption { margin-bottom: 0.2rem; color: var(--muted); font-size: 0.75rem; }
+.project-dialog-heading h2 { font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 650; letter-spacing: -0.035em; line-height: 1.35; overflow-wrap: anywhere; }
+.project-dialog-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background 150ms, color 150ms;
+}
+.project-dialog-close:hover { background: var(--project-soft); color: var(--project-accent); }
+.project-dialog-body {
+  display: grid;
+  gap: 2.75rem;
+  min-height: 0;
+  margin: 0 6px 6px;
+  padding: 2rem;
+  border-radius: 0 0 1.4rem 1.4rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--fg) 80%, var(--bg));
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.project-dialog-body[data-scrolling] { scrollbar-color: var(--project-accent) transparent; }
+.project-dialog-body::-webkit-scrollbar { width: 6px; }
+.project-dialog-body::-webkit-scrollbar-track { background: transparent; }
+.project-dialog-body::-webkit-scrollbar-thumb { background: transparent; border-radius: 999px; }
+.project-dialog-body[data-scrolling]::-webkit-scrollbar-thumb { background: var(--project-accent); }
+.project-overview { padding: 0.75rem 0 2.5rem; border-bottom: 1px solid var(--border); }
+.project-overview-with-image { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; gap: 2rem; }
+.project-preview { min-width: 0; margin-top: 3rem; }
+.project-preview img { display: block; width: 100%; height: auto; }
+.project-preview > a, .project-preview > img { overflow: hidden; border: 1px solid var(--border); border-radius: 0.9rem; }
+.project-preview > a { display: block; cursor: pointer; }
+.project-preview > a:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+.project-preview figcaption { margin-top: 0.25rem; font-size: 0.75rem; line-height: 1.5; text-align: right; }
+.project-preview figcaption a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.project-preview figcaption a:hover { color: var(--fg); }
+.project-kind { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--project-accent); font-size: 0.75rem; font-weight: 600; }
+.project-kind > span { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.project-summary { max-width: 36rem; margin: 1rem 0 1.25rem; color: var(--fg); font-size: clamp(1.35rem, 2.5vw, 1.9rem); line-height: 1.4; font-weight: 550; letter-spacing: -0.04em; text-wrap: pretty; }
+.project-introduction { max-width: 42rem; font-size: 0.9375rem; }
+.project-technologies { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+.project-technologies > span { padding: 0.35rem 0.65rem; border: 1px solid var(--border); border-radius: 0.35rem; font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.6; color: var(--muted); }
+.project-dialog-body h3 { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; color: var(--fg); font-weight: 650; font-size: 1.2rem; letter-spacing: -0.03em; }
+.project-dialog-body h3 > svg { color: var(--project-accent); flex-shrink: 0; }
+.project-features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2rem; }
+.project-features > li { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1.1rem 0; border-top: 1px solid var(--border); font-size: 0.9375rem; }
+.project-features > li > svg { flex-shrink: 0; margin-top: 0.25rem; color: var(--project-accent); }
+.project-roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.project-roles > div { padding: 1.25rem; background: var(--card); border: 1px solid var(--border); border-top: 3px solid color-mix(in srgb, var(--accent) 65%, var(--border)); border-radius: 0.85rem; }
+.project-dialog-body dt { margin-bottom: 0.6rem; color: var(--fg); font-weight: 650; }
+.project-roles dd { font-size: 0.9375rem; line-height: 1.75; }
+.project-workflow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.project-workflow > li { display: flex; gap: 0.75rem; align-items: flex-start; }
+.project-workflow > li > span { display: grid; place-items: center; flex-shrink: 0; width: 30px; height: 30px; color: var(--project-accent); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; }
+.project-workflow p { padding-top: 0.15rem; color: var(--fg); font-size: 0.9375rem; line-height: 1.5; }
+.project-stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 2rem; }
+.project-stack > div { padding-top: 1.25rem; border-top: 1px solid var(--border); }
+.project-stack dd { font-size: 0.9375rem; }
+.project-architecture { border-left: 3px solid var(--project-accent); padding: 0.25rem 0 0.25rem 1.5rem; }
+.project-architecture p { max-width: 46rem; }
+.project-dialog-footer { display: grid; gap: 1.25rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.8125rem; }
+.project-dialog-close:focus-visible,
+.project-preview figcaption a:focus-visible,
+button.project-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.project-dialog-body:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+button.project-row { cursor: pointer; }
+body:has(.project-dialog[open]) { overflow: hidden; }
+@keyframes project-dialog-enter { from { opacity: 0; transform: translateY(8px) scale(0.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 900px) {
+  .project-overview-with-image { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .project-preview { margin-top: 0; }
+}
+@media (max-width: 760px) {
+  .project-dialog { width: calc(100vw - 1rem); max-height: calc(100dvh - 1rem); border-radius: 1.25rem; }
+  .project-dialog-heading { padding: 1rem; gap: 0.6rem; }
+  .project-dialog-identity { gap: 0.65rem; }
+  .project-dialog-mark { width: 38px; height: 38px; border-radius: 0.7rem; }
+  .project-dialog-mark > svg { width: 20px; height: 20px; }
+  .project-dialog-body { padding: 1.25rem 0.9rem; gap: 2rem; }
+  .project-overview { padding-bottom: 2rem; }
+  .project-features, .project-roles, .project-stack { grid-template-columns: minmax(0, 1fr); }
+  .project-features > li, .project-introduction, .project-roles dd, .project-stack dd, .project-workflow p { font-size: 1rem; }
+  .project-workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 0.75rem; }
+}
+@media (max-width: 360px) {
+  .project-dialog-mark { display: none; }
+  .project-workflow { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-dialog[open] { animation: none; }
+  .project-dialog-close { transition: none; }
+}
+@media (forced-colors: active) {
+  .project-dialog-body, .project-dialog-body[data-scrolling] { scrollbar-color: auto; }
+}
